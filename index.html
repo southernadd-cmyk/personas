@@ -84,7 +84,7 @@ personas.forEach(p=>{const c=document.createElement('button');c.className='choic
 function stage3(){
 selectedNeeds=[];
 render('<h2>3. Persona detective</h2><p>You chose <strong>'+persona.name+'</strong>. Select the <strong>three requirements</strong> that are best supported by this persona.</p><div class="grid" id="ng"></div><div class="actions" id="a"></div><div id="fb" class="feedback"></div>');
-const candidates=[...allNeeds].sort(()=>Math.random()-.5).slice(0,6);
+const relevant=allNeeds.filter(n=>n.for.includes(persona.id)).sort(()=>Math.random()-.5).slice(0,3); const distractors=allNeeds.filter(n=>!n.for.includes(persona.id)).sort(()=>Math.random()-.5).slice(0,3); const candidates=[...relevant,...distractors].sort(()=>Math.random()-.5);
 const ng=document.getElementById('ng');
 candidates.forEach(n=>{const b=document.createElement('button');b.className='choice';b.textContent=n.t;b.onclick=()=>{b.classList.toggle('selected');if(b.classList.contains('selected')) selectedNeeds.push(n); else selectedNeeds=selectedNeeds.filter(x=>x!==n)};ng.append(b)});
 document.getElementById('a').append(btn('Check my choices',()=>{
@@ -93,7 +93,7 @@ const correct=selectedNeeds.filter(n=>n.for.includes(persona.id)).length;addScor
 fb.className='feedback '+(correct>=2?'good':'bad');
 fb.innerHTML='<strong>'+correct+'/3 strongly justified.</strong><br>'+selectedNeeds.map(n=>'• '+n.t+': '+n.why).join('<br>');
 const next=btn('Build user stories →',()=>{step=4;stage4()});document.getElementById('a').append(next);
-},{kind:'primary'}))
+}))
 }
 function stage4(){
 builtStories=[];

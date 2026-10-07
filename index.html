@@ -226,7 +226,10 @@ why:'This is too large to be a useful story. It bundles many different goals int
 fix:'Break it into smaller stories that can be understood, built and tested separately.'},
 {story:'As a learner with limited study time, I want to return to the last topic I opened, so that I can continue without searching for it again.',good:true,
 why:'The user context is meaningful, the goal is focused, and the benefit clearly explains its value.',
-fix:'This is focused enough to discuss and test while still leaving the implementation open.'}
+fix:'This is focused enough to discuss and test while still leaving the implementation open.'},
+{story:'As a student, I want a search box fixed at the top of every page, so that I can find revision topics quickly.',good:false,
+why:'The underlying need is good, but the story has already prescribed a particular interface control and its position.',
+fix:'Keep the need and remove the design decision: “As a student, I want to find revision topics quickly, so that I can spend more time revising.”'}
 ];
 
 function esc(s){return String(s).replace(/[&<>"']/g,function(m){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]})}
@@ -261,10 +264,6 @@ function actions(){const d=document.createElement('div');d.className='btns';retu
 function next(text,fn){const a=actions();a.append(button(text,fn,false));screen.append(a)}
 function supportedNeeds(p){return needs.filter(function(n){return !!n.support[p.id]})}
 function fitNames(n){return Object.keys(n.support).map(function(id){return personaById(id).name.split(' ')[0]})}
-function tokens(s){
-  const stop=['this','that','with','from','into','have','will','their','there','when','where','what','which','because','about','they','them','then','than','user','student','learner','want','that','your','need','needs','app'];
-  return String(s).toLowerCase().match(/[a-z]+/g)||[].filter(function(){return true})
-}
 function significantTokens(s){
   const stop=new Set(['this','that','with','from','into','have','will','their','there','when','where','what','which','because','about','they','them','then','than','user','student','learner','want','your','need','needs','app','page','able','every']);
   return (String(s).toLowerCase().match(/[a-z]+/g)||[]).filter(function(w){return w.length>3&&!stop.has(w)})
@@ -668,7 +667,7 @@ function stage7(critiqueScore){
 function showResults(critiqueScore){
   step=8;
   const completedAt=new Date().toLocaleString('en-GB',{dateStyle:'medium',timeStyle:'short'});
-  const max=170,pct=Math.round(score/max*100);
+  const max=180,pct=Math.round(score/max*100);
   tip.textContent='The strongest design decisions can be traced backwards to research and user evidence.';
 
   const needSummary=selectedNeeds.map(function(n){return '<span class="evidence-chip">'+esc(n.title)+'</span>'}).join(' ');

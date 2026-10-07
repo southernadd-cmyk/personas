@@ -5,7 +5,7 @@ const tip=document.getElementById('tip');
 const stageStrip=document.getElementById('stageStrip');
 const reduceMotion=window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-let step=1,score=0,persona=null,selectedNeeds=[],builtStories=[],freeStory=null,priorityOrder=[],priorityReason='';
+let step=1,score=0,persona=null,selectedNeeds=[],builtStories=[],freeStory=null,independentChallenge=null,priorityOrder=[],priorityReason='';
 let learnerName='',learnerClass='',evidenceScored=false,guidedScored=false;
 const stages=['Brief','Persona','Evidence','Guided story','Write one','Critique','Priority'];
 
@@ -64,6 +64,39 @@ dan:{goal:'search directly for the topic I need',benefit:'I do not waste my limi
 {id:'threeD',title:'Animated 3D landing page',support:{},story:{},noFit:'No persona evidence says a 3D intro solves a user problem. It is a design preference.'},
 {id:'music',title:'Autoplay background music',support:{},story:{},noFit:'No persona asks for background music, and autoplay could create an accessibility or concentration barrier.'}
 ];
+
+const transferChallenges={
+maya:[
+{id:'maya-captions',
+evidence:'A follow-up interview finds that Maya often watches revision videos on a noisy bus. She cannot always hear the narration and usually keeps her phone muted around other passengers.',
+concepts:['caption','captions','subtitle','subtitles','transcript','text','video','hear','sound','audio','muted','narration'],
+model:'As a student revising while travelling, I want a text alternative to spoken video content, so that I can understand the lesson when I cannot hear the audio.'},
+{id:'maya-duration',
+evidence:'Maya says she sometimes has only 10–15 minutes before her next lesson. She gets frustrated when she opens a revision activity and only discovers halfway through that it takes much longer than the time she has available.',
+concepts:['time','minutes','duration','length','estimate','short','activity','finish','choose','available'],
+model:'As a student revising in short gaps, I want to know roughly how long an activity will take, so that I can choose one I have time to finish.'}
+],
+dan:[
+{id:'dan-progress',
+evidence:'In a later interview, Dan says that after several busy days away from studying he often cannot remember which revision topics he has already completed. He sometimes repeats work by mistake.',
+concepts:['progress','completed','complete','topics','track','status','remember','repeat','finished','studied'],
+model:'As a part-time learner, I want to see which topics I have already completed, so that I can continue my revision without repeating work.'},
+{id:'dan-duration',
+evidence:'Dan explains that some evenings he has 20 minutes to study and other evenings he has an hour. He wants to choose an activity that fits the time he actually has before going to bed.',
+concepts:['time','minutes','hour','duration','length','estimate','activity','choose','finish','evening'],
+model:'As a part-time learner, I want to know how long revision activities are likely to take, so that I can choose one that fits the time I have available.'}
+],
+leo:[
+{id:'leo-errors',
+evidence:'During an accessibility test, Leo submits a form with a mistake. The page only puts a red border around the incorrect field. His assistive technology does not explain what went wrong or how to correct it.',
+concepts:['error','errors','message','text','explain','mistake','wrong','correct','field','invalid','assistive'],
+model:'As a learner using assistive technology, I want form errors to be explained in text, so that I can understand what went wrong and correct it.'},
+{id:'leo-timeout',
+evidence:'Leo reports that a timed revision quiz sometimes moves on before his assistive technology has finished reading the question and answer choices. He knows the content but cannot always respond before the timer expires.',
+concepts:['time','timer','timed','extra','extend','pause','reading','read','pace','respond','expires','assistive'],
+model:'As a learner using assistive technology, I want enough time to read and answer each question, so that I can demonstrate what I know without the timer blocking me.'}
+]
+};
 
 const critiqueBank=[
 {story:'As a student, I want a dark blue navigation bar, so that the website looks modern.',good:false,
@@ -358,64 +391,101 @@ function stage4(){
 }
 
 function stage5(){
-  tip.textContent='Matching proves you can recognise a story. Now you need to produce one yourself.';
+  tip.textContent='This is the transfer task: new evidence, a new need, and a user story you have not seen before.';
   freeStory=null;
+  independentChallenge=shuffle(transferChallenges[persona.id])[0];
+
   render(
-    '<div class="kicker">Independent story / 05</div><h2>Now write one without the sentence being built for you.</h2>'+
-    '<p class="lead">Choose one of the three needs you justified. Then write a complete user story in your own words.</p>'+
-    '<section class="lesson"><div class="lesson-head"><span class="lesson-no">5</span><strong>Recognition is not the same as production</strong></div><div class="lesson-body">'+
-      '<p>The previous round gave you possible goals and benefits. This round checks whether you can create the structure yourself.</p>'+
-      '<div class="anatomy"><div><strong>As a…</strong>Who is the user?</div><div><strong>I want…</strong>What do they need to achieve?</div><div><strong>So that…</strong>Why does it matter?</div></div>'+
-      '<div class="example"><div class="label">Important</div><p>You can paraphrase the need. You do not have to copy the earlier wording. Keep the story focused on the user rather than a colour, layout or technology.</p></div>'+
+    '<div class="kicker">Independent transfer task / 05</div>'+
+    '<h2>New evidence has arrived. What does it mean for the design?</h2>'+
+    '<p class="lead">This research note was <strong>not used in the earlier matching activity</strong>. Work out the user need yourself, then turn it into an original user story.</p>'+
+    '<section class="lesson"><div class="lesson-head"><span class="lesson-no">5</span><strong>Do the full chain yourself</strong></div><div class="lesson-body">'+
+      '<div class="why-chain">'+
+        '<div class="chain-box">NEW EVIDENCE<br><span class="small">What happened?</span></div><div class="chain-arrow">→</div>'+
+        '<div class="chain-box">NEED<br><span class="small">What problem should be solved?</span></div><div class="chain-arrow">→</div>'+
+        '<div class="chain-box">USER STORY<br><span class="small">Who needs what, and why?</span></div><div class="chain-arrow">→</div>'+
+        '<div class="chain-box">POSSIBLE FEATURE<br><span class="small">Decided later</span></div>'+
+      '</div>'+
+      '<div class="example"><div class="label">Important</div><p>Do not jump straight to a specific button, colour or technology. First describe the <strong>outcome the user needs</strong>. Different designs could potentially satisfy the same story.</p></div>'+
     '</div></section>'+
-    '<h3>1. Choose the need your story will address</h3><div id="freeNeedChoices"></div>'+
-    '<h3 style="margin-top:22px">2. Write the story</h3>'+
+    '<h3>New research note: '+esc(persona.name)+'</h3>'+
+    '<div class="summary-card" style="background:#edf4f4"><span class="meta">Follow-up research</span><p><strong>'+esc(independentChallenge.evidence)+'</strong></p></div>'+
+    '<h3 style="margin-top:24px">1. Infer the user need</h3>'+
+    '<div class="story-form"><label for="inferredNeed">What problem, goal or barrier does this evidence reveal?</label>'+
+      '<textarea id="inferredNeed" rows="3" maxlength="260" placeholder="In my own words, the user needs…"></textarea>'+
+      '<p class="small">Do not write the user story yet. State the underlying need first.</p></div>'+
+    '<h3 style="margin-top:24px">2. Turn that need into a user story</h3>'+
     '<div class="story-form">'+
       '<div class="field"><label for="freeUser">As a…</label><input id="freeUser" maxlength="100" value="'+esc(persona.role.toLowerCase())+'"></div>'+
-      '<div class="field"><label for="freeGoal">I want…</label><textarea id="freeGoal" rows="2" maxlength="220" placeholder="Describe the user goal in your own words"></textarea></div>'+
-      '<div class="field"><label for="freeBenefit">So that…</label><textarea id="freeBenefit" rows="2" maxlength="220" placeholder="Explain why achieving that goal matters"></textarea></div>'+
+      '<div class="field"><label for="freeGoal">I want…</label><textarea id="freeGoal" rows="2" maxlength="220" placeholder="Describe what the user needs to be able to do"></textarea></div>'+
+      '<div class="field"><label for="freeBenefit">So that…</label><textarea id="freeBenefit" rows="2" maxlength="220" placeholder="Explain why this outcome matters to the user"></textarea></div>'+
       '<div class="story-preview" id="freePreview">Your complete story will appear here.</div>'+
     '</div>'+
     '<div id="feedback" class="feedback" aria-live="polite"></div>'
   );
 
-  const choices=document.getElementById('freeNeedChoices');
-  selectedNeeds.forEach(function(n,i){
-    const id='freeNeed-'+i;
-    const label=document.createElement('label');label.className='radio-card';
-    label.innerHTML='<input type="radio" name="freeNeed" id="'+id+'" value="'+esc(n.id)+'"> <strong>'+esc(n.title)+'</strong><br><span class="small">'+esc(n.support[persona.id])+'</span>';
-    choices.append(label)
-  });
-
   function preview(){
-    const u=document.getElementById('freeUser').value.trim(),g=document.getElementById('freeGoal').value.trim(),b=document.getElementById('freeBenefit').value.trim();
+    const u=document.getElementById('freeUser').value.trim();
+    const g=document.getElementById('freeGoal').value.trim();
+    const b=document.getElementById('freeBenefit').value.trim();
     document.getElementById('freePreview').textContent=(u&&g&&b)?'As a '+u+', I want '+g+', so that '+b+'.':'Your complete story will appear here.'
   }
   ['freeUser','freeGoal','freeBenefit'].forEach(function(id){document.getElementById(id).addEventListener('input',preview)});
 
   const a=actions();
-  a.append(button('Check my written story',function(){
-    const picked=document.querySelector('input[name="freeNeed"]:checked');
+  a.append(button('Check my independent story',function(){
+    const inferred=document.getElementById('inferredNeed').value.trim();
     const u=document.getElementById('freeUser').value.trim();
     const g=document.getElementById('freeGoal').value.trim();
     const b=document.getElementById('freeBenefit').value.trim();
     const fb=document.getElementById('feedback');
-    if(!picked){fb.className='feedback bad';fb.innerHTML='<strong>Choose which need your story is based on.</strong>';return}
-    if(u.length<4||g.length<12||b.length<12){fb.className='feedback bad';fb.innerHTML='<strong>Your story is too thin.</strong> Give a meaningful user, goal and reason.';return}
-    const n=needs.find(function(x){return x.id===picked.value});
-    const source=n.title+' '+n.support[persona.id]+' '+n.story[persona.id].goal+' '+n.story[persona.id].benefit;
-    const evidenceWords=new Set(significantTokens(source));
-    const writtenWords=significantTokens(g+' '+b);
-    const overlap=writtenWords.filter(function(w){return evidenceWords.has(w)});
-    const allWords=(g+' '+b).toLowerCase().match(/[a-z]+/g)||[];
+
+    if(inferred.length<18){
+      fb.className='feedback bad';
+      fb.innerHTML='<strong>Explain the need first.</strong> Use a short sentence that identifies the problem, goal or barrier in the new research note.';
+      return
+    }
+    if(u.length<4||g.length<12||b.length<12){
+      fb.className='feedback bad';
+      fb.innerHTML='<strong>Your user story needs all three meaningful parts.</strong> Give a user, a focused goal and a reason that adds value.';
+      return
+    }
+
+    const combined=(inferred+' '+g+' '+b).toLowerCase();
+    const conceptHits=independentChallenge.concepts.filter(function(word){return combined.indexOf(word)!==-1});
+    const allWords=(inferred+' '+g+' '+b).toLowerCase().match(/[a-z]+/g)||[];
     const unique=new Set(allWords);
-    if(allWords.length<8||unique.size<6){fb.className='feedback bad';fb.innerHTML='<strong>Add more meaning.</strong> Repeated or filler text does not show a clear goal and benefit.';return}
-    if(overlap.length<1){fb.className='feedback bad';fb.innerHTML='<strong>Make the evidence link clearer.</strong> Your wording can be original, but the goal or benefit should clearly connect to the selected need.';return}
-    freeStory={needId:n.id,user:u,goal:g,benefit:b,text:'As a '+u+', I want '+g+', so that '+b+'.'};
+
+    if(allWords.length<16||unique.size<11){
+      fb.className='feedback bad';
+      fb.innerHTML='<strong>Add more meaning.</strong> Repeated or filler text does not demonstrate that you have interpreted the new evidence.';
+      return
+    }
+    if(new Set(conceptHits).size<2){
+      fb.className='feedback bad';
+      fb.innerHTML='<strong>Make the link to the new research clearer.</strong> Your wording is original, but the need and story should clearly respond to the problem described in the research note.';
+      return
+    }
+
+    freeStory={
+      challengeId:independentChallenge.id,
+      evidence:independentChallenge.evidence,
+      inferredNeed:inferred,
+      user:u,
+      goal:g,
+      benefit:b,
+      text:'As a '+u+', I want '+g+', so that '+b+'.'
+    };
     addScore(20);
     fb.className='feedback good';
-    fb.innerHTML='<strong>Structure and evidence link found.</strong><br><br>'+esc(freeStory.text)+'<br><br><span class="small">Automated checking can test structure and a basic evidence link. Your teacher should still judge how precise and useful the wording is.</span>';
-    a.innerHTML='';a.append(button('Critique other stories →',function(){step=6;stage6()},false))
+    fb.innerHTML=
+      '<strong>Independent evidence chain found.</strong><br><br>'+
+      '<strong>Your inferred need:</strong> '+esc(inferred)+'<br><br>'+
+      '<strong>Your story:</strong> '+esc(freeStory.text)+'<br><br>'+
+      '<strong>Compare with one possible model answer:</strong> '+esc(independentChallenge.model)+
+      '<br><br><span class="small">Your wording does not need to match the model. The important question is whether it responds to the evidence and explains genuine user value.</span>';
+    a.innerHTML='';
+    a.append(button('Critique other stories →',function(){step=6;stage6()},false))
   },false));
   mainScreen.append(a)
 }
@@ -540,7 +610,7 @@ function showResults(critiqueScore){
     '<div class="casefile"><div class="case-no">1</div><div><h3>Persona</h3><p><strong>'+esc(persona.name)+'</strong> — '+esc(persona.role)+'</p><p>'+esc(persona.context)+'</p><p><strong>Goals:</strong> '+persona.goals.map(esc).join(' · ')+'</p><p><strong>Frustrations:</strong> '+persona.frustrations.map(esc).join(' · ')+'</p></div></div>'+
     '<h3 style="margin-top:28px">Evidence-backed requirements</h3><p>'+needSummary+'</p>'+
     '<h3 style="margin-top:28px">Guided stories</h3>'+builtStories.map(function(s){return '<div class="summary-card"><p>'+esc(s.text)+'</p></div>'}).join('')+
-    '<h3 style="margin-top:28px">Independent user story</h3><div class="summary-card" style="background:#e7eee2"><span class="meta">Written by learner</span><p>'+esc(freeStory.text)+'</p></div>'+
+    '<h3 style="margin-top:28px">Independent transfer task</h3>'+    '<div class="summary-card" style="background:#edf4f4"><span class="meta">New research evidence</span><p>'+esc(freeStory.evidence)+'</p></div>'+    '<div class="summary-card"><span class="meta">Need inferred by learner</span><p>'+esc(freeStory.inferredNeed)+'</p></div>'+    '<div class="summary-card" style="background:#e7eee2"><span class="meta">User story written by learner</span><p>'+esc(freeStory.text)+'</p></div>'+
     '<h3 style="margin-top:28px">Ranked backlog</h3>'+ranked+
     '<div class="summary-card" style="background:#f1dc63"><span class="meta">Priority justification</span><p>'+esc(priorityReason)+'</p></div>'+
     '<section class="lesson"><div class="lesson-head"><span class="lesson-no">✓</span><strong>What this work demonstrates</strong></div><div class="lesson-body"><ul class="checklist">'+
@@ -556,7 +626,7 @@ function showResults(critiqueScore){
 
   const a=actions();
   a.append(button('Start again',function(){
-    step=1;score=0;persona=null;selectedNeeds=[];builtStories=[];freeStory=null;priorityOrder=[];priorityReason='';learnerName='';learnerClass='';stage1()
+    step=1;score=0;persona=null;selectedNeeds=[];builtStories=[];freeStory=null;independentChallenge=null;priorityOrder=[];priorityReason='';learnerName='';learnerClass='';stage1()
   },true));
   a.append(button('Print / save evidence',function(){window.print()},false));
   mainScreen.append(a);update()

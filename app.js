@@ -7,20 +7,20 @@ const reduceMotion=window.matchMedia && window.matchMedia('(prefers-reduced-moti
 
 let step=1,score=0,persona=null,selectedNeeds=[],builtStories=[],freeStory=null,independentChallenge=null,priorityOrder=[],priorityReason='';
 let learnerName='',learnerClass='',evidenceScored=false,guidedScored=false;
-const stages=['Brief','Persona','Evidence','Guided story','Write one','Critique','Priority'];
+const stages=['Brief','Persona','Evidence','Guided story','Transfer task','Critique','Priority'];
 
 const personas=[
-{id:'maya',avatar:'🎧',name:'Maya Patel',age:17,role:'Sixth-form student',device:'Mostly phone',
+{id:'maya',avatar:'MP',name:'Maya Patel',age:17,role:'Sixth-form student',device:'Mostly phone',
 context:'Revises on buses and in short gaps between lessons. Mobile signal is not always reliable.',
 goals:['Revise in short bursts','See progress quickly','Use the service comfortably on a phone'],
 frustrations:['Long walls of text','Losing progress','Desktop-first layouts'],
 access:'Clear text, strong contrast and large touch targets.'},
-{id:'dan',avatar:'☕',name:'Dan Reeves',age:42,role:'Part-time mature learner',device:'Laptop at home',
+{id:'dan',avatar:'DR',name:'Dan Reeves',age:42,role:'Part-time mature learner',device:'Laptop at home',
 context:'Works full-time and studies late in the evening. He has little patience for hunting through menus.',
 goals:['Find exactly what he needs','Resume previous work','Understand unfamiliar terminology'],
 frustrations:['Hidden navigation','Unexplained jargon','Unnecessary steps'],
 access:'Plain language, obvious navigation and reliable save/resume.'},
-{id:'leo',avatar:'⌨️',name:'Leo Brooks',age:19,role:'College student',device:'Laptop + keyboard',
+{id:'leo',avatar:'LB',name:'Leo Brooks',age:19,role:'College student',device:'Laptop + keyboard',
 context:'Technically confident. Uses keyboard navigation and assistive technology rather than relying on a mouse.',
 goals:['Reach every control by keyboard','Know where focus is','Complete the same tasks as everyone else'],
 frustrations:['Mouse-only controls','Invisible focus states','Unlabelled icons'],
@@ -137,7 +137,7 @@ function update(){
     return '<div class="stage-dot '+state+'"'+current+'>'+(i+1)+'. '+esc(s)+'</div>'
   }).join('');
   if(learnerName){
-    workingFile.innerHTML='<strong>'+esc(learnerName)+'</strong><br>'+esc(learnerClass)+(persona?'<br><br><strong>'+esc(persona.name)+'</strong><br>'+esc(persona.role):'');
+    workingFile.innerHTML='<span class="meta">LEARNER</span><br><strong>'+esc(learnerName)+'</strong><br>'+esc(learnerClass)+'<br><br><span class="meta">CURRENT FILE</span><br>'+(persona?'<strong>'+esc(persona.name)+'</strong><br>'+esc(persona.role):'Awaiting persona selection')+'<br><br><span class="meta">PHASE</span><br>'+esc(stages[Math.min(step-1,stages.length-1)]);
   }else workingFile.textContent='No learner details yet.';
 }
 function addScore(n){score+=n;update()}
@@ -384,7 +384,7 @@ function stage4(){
         text:'As a '+persona.role.toLowerCase()+', I want to '+r.story.goal+', so that '+r.story.benefit+'.',
         goal:r.story.goal,benefit:r.story.benefit
       }});
-      a.innerHTML='';a.append(button('Now write one yourself →',function(){step=5;stage5()},false))
+      a.innerHTML='';a.append(button('Apply it to new evidence →',function(){step=5;stage5()},false))
     }
   },false));
   mainScreen.append(a)

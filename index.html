@@ -762,7 +762,7 @@ select:focus,textarea:focus,input:focus{
 </header>
 <nav class="stage-strip" id="stageStrip" aria-label="Activity progress"><div class="stage-dot current" aria-current="step">1. Brief</div><div class="stage-dot">2. Persona</div><div class="stage-dot">3. Evidence</div><div class="stage-dot">4. Guided story</div><div class="stage-dot">5. Write one</div><div class="stage-dot">6. Critique</div><div class="stage-dot">7. Priority</div></nav>
 <div class="workspace">
-  <main class="paper" id="screen"><div class="kicker">Starting Persona Lab</div><h2 tabindex="-1">Loading the activity…</h2><p class="lead">If this message remains on screen, the activity script has not loaded. Refresh the page; if it still remains, report the build version shown below.</p><p class="small">Build: 2026-10-07d</p></main>
+  <main class="paper" id="screen"><div class="kicker">Starting Persona Lab</div><h2 tabindex="-1">Loading the activity…</h2><p class="lead">If this message remains on screen, the activity script has not loaded. Refresh the page; if it still remains, report the build version shown below.</p><p class="small">Build: 2026-10-07e</p></main>
   <aside class="sidebar">
     <section class="clipboard">
       <h3>Working file</h3>
@@ -792,10 +792,10 @@ select:focus,textarea:focus,input:focus{
 window.addEventListener('error',function(event){
   var area=document.getElementById('screen');
   if(!area)return;
-  area.innerHTML='<div class="kicker">Persona Lab error</div><h2 tabindex="-1">The activity failed to start.</h2><p class="lead">The page loaded, but the application code hit an error.</p><div class="feedback bad" style="display:block"><strong>Error:</strong> '+String(event.message||'Unknown JavaScript error').replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c]})+'</div><p class="small">Build: 2026-10-07b</p>';
+  area.innerHTML='<div class="kicker">Persona Lab error</div><h2 tabindex="-1">The activity failed to start.</h2><p class="lead">The page loaded, but the application code hit an error.</p><div class="feedback bad" style="display:block"><strong>Error:</strong> '+String(event.message||'Unknown JavaScript error').replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c]})+'</div><p class="small">Build: 2026-10-07e</p>';
 });
 </script>
-<script src="./app.js?v=20261007d"></script>
+<script src="./app.js?v=20261007e"></script>
 <noscript><div style="padding:1rem;background:#f3dfd9;border:2px solid #b84a3d">Persona Lab requires JavaScript to run.</div></noscript>
 </body>
 </html>

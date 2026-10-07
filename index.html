@@ -3,138 +3,277 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Persona Quest</title>
+<title>Persona Lab — User Personas & Stories</title>
 <style>
-:root{--bg:#0f172a;--panel:#111827;--card:#1f2937;--text:#f8fafc;--muted:#cbd5e1;--accent:#38bdf8;--good:#22c55e;--warn:#f59e0b;--bad:#ef4444}
+:root{
+  --paper:#f3efe3; --ink:#1e1d1a; --muted:#615f58; --rule:#b8b1a3;
+  --yellow:#f2df66; --blue:#8fc6cf; --pink:#e5a9a3; --green:#a9c79e;
+  --red:#b84638; --white:#fffdf7; --shadow:rgba(54,45,31,.16);
+}
 *{box-sizing:border-box}
-body{margin:0;font-family:Inter,system-ui,Segoe UI,Arial,sans-serif;background:linear-gradient(180deg,#0f172a,#111827);color:var(--text);min-height:100vh}
-main{max-width:1000px;margin:auto;padding:24px}
-header{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:24px}
-.brand{font-size:clamp(1.8rem,5vw,3.3rem);font-weight:900;letter-spacing:-.04em}.brand span{color:var(--accent)}
-.progress{flex:1;min-width:220px}.bar{height:10px;background:#334155;border-radius:999px;overflow:hidden}.fill{height:100%;background:var(--accent);width:0;transition:.25s}
-.panel{background:rgba(17,24,39,.92);border:1px solid #334155;border-radius:22px;padding:clamp(18px,4vw,36px);box-shadow:0 20px 70px rgba(0,0,0,.25)}
-h1,h2,h3{margin-top:0}h2{font-size:clamp(1.5rem,4vw,2.3rem)}p{line-height:1.6;color:var(--muted)}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
-.card,.choice{background:var(--card);border:2px solid #374151;border-radius:16px;padding:18px;color:inherit}
-.choice{cursor:pointer;text-align:left;width:100%;font:inherit;transition:.15s}.choice:hover,.choice:focus{border-color:var(--accent);transform:translateY(-1px);outline:none}.choice.selected{border-color:var(--accent);background:#0c4a6e}
-.avatar{font-size:3rem}.tag{display:inline-block;padding:5px 9px;border-radius:999px;background:#334155;color:#e2e8f0;font-size:.8rem;margin:2px}
-button.primary,button.secondary{border:0;border-radius:12px;padding:13px 18px;font-weight:800;font-size:1rem;cursor:pointer;min-height:44px}
-button.primary{background:var(--accent);color:#082f49}button.secondary{background:#334155;color:white}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}
-.feedback{margin-top:18px;padding:14px;border-radius:12px;display:none}.feedback.good{display:block;background:#14532d}.feedback.bad{display:block;background:#7f1d1d}
-.story{display:grid;grid-template-columns:1fr;gap:10px;margin:14px 0}.story select{width:100%;padding:12px;border-radius:10px;background:#0f172a;color:white;border:1px solid #475569;font-size:1rem}
-.bucket{min-height:130px;border:2px dashed #475569;border-radius:14px;padding:12px}.bucket h3{margin-bottom:10px}
-.story-chip{background:#334155;border-radius:10px;padding:10px;margin:8px 0;font-size:.92rem}
-.score{font-size:3rem;font-weight:900;color:var(--accent)}
-.hidden{display:none!important}.small{font-size:.9rem;color:#94a3b8}
-@media(max-width:600px){main{padding:14px}.panel{border-radius:16px}.actions button{width:100%}}
+html{background:#c8c2b5}
+body{margin:0;color:var(--ink);font-family:Georgia,"Times New Roman",serif;background:
+  linear-gradient(rgba(255,255,255,.18),rgba(255,255,255,.18)),
+  repeating-linear-gradient(0deg,#d3cec2 0,#d3cec2 1px,#cbc5b9 1px,#cbc5b9 4px);
+min-height:100vh}
+button,select,input,textarea{font:inherit}
+button{color:inherit}
+.shell{max-width:1180px;margin:0 auto;padding:18px}
+.masthead{display:grid;grid-template-columns:1fr auto;gap:18px;align-items:end;margin:6px 0 18px}
+.logo{font-family:Arial Black,Impact,sans-serif;font-size:clamp(2rem,6vw,4.7rem);line-height:.82;letter-spacing:-.055em;text-transform:uppercase}
+.logo small{display:block;font-family:"Courier New",monospace;font-size:.18em;letter-spacing:.2em;margin-top:11px}
+.score-stamp{font-family:"Courier New",monospace;border:3px solid var(--red);color:var(--red);padding:9px 12px;transform:rotate(2deg);font-weight:900;background:rgba(255,253,247,.6)}
+.stage-strip{display:grid;grid-template-columns:repeat(6,1fr);border:2px solid var(--ink);background:var(--white);margin-bottom:18px}
+.stage-dot{min-height:38px;display:flex;align-items:center;justify-content:center;padding:6px;border-right:1px solid var(--ink);font:700 .72rem "Courier New",monospace;text-align:center}
+.stage-dot:last-child{border-right:0}.stage-dot.done{background:var(--ink);color:var(--paper)}.stage-dot.current{background:var(--yellow)}
+.workspace{display:grid;grid-template-columns:minmax(0,2.1fr) minmax(230px,.75fr);gap:22px;align-items:start}
+.paper{position:relative;background:var(--paper);border:1px solid #aaa292;padding:clamp(20px,4vw,44px);box-shadow:7px 9px 0 var(--shadow);min-height:560px}
+.paper:before{content:"";position:absolute;left:34px;top:0;bottom:0;border-left:1px solid rgba(184,70,56,.22);pointer-events:none}
+.paper>*{position:relative}
+.sidebar{display:grid;gap:14px}
+.clipboard,.note{padding:16px;background:var(--white);border:1px solid #9e9789;box-shadow:4px 5px 0 var(--shadow)}
+.clipboard h3,.note h3{font:900 .78rem "Courier New",monospace;letter-spacing:.08em;text-transform:uppercase;margin:0 0 10px}
+.note{background:var(--yellow);transform:rotate(-1deg)}
+.note:nth-child(even){background:#d8e7d1;transform:rotate(1deg)}
+.kicker{font:900 .78rem "Courier New",monospace;text-transform:uppercase;letter-spacing:.12em;color:var(--red);margin-bottom:8px}
+h1,h2,h3{font-family:Arial,Helvetica,sans-serif;letter-spacing:-.03em}
+h1,h2{font-weight:900}h2{font-size:clamp(1.8rem,4vw,3rem);margin:0 0 8px}
+h3{margin-top:0}
+p{line-height:1.55;margin:8px 0 14px}.lead{font-size:1.1rem;max-width:720px}
+.rule{border:0;border-top:2px solid var(--ink);margin:24px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px}
+.choice{position:relative;width:100%;text-align:left;border:2px solid var(--ink);background:var(--white);padding:16px;min-height:116px;cursor:pointer;box-shadow:3px 4px 0 var(--ink);transition:transform .08s,box-shadow .08s}
+.choice:hover,.choice:focus-visible{transform:translate(-2px,-2px);box-shadow:5px 6px 0 var(--ink);outline:3px solid var(--blue);outline-offset:2px}
+.choice.selected{background:var(--yellow)}
+.choice.selected:after{content:"✓";position:absolute;right:10px;top:7px;font:900 1.5rem Arial;color:var(--red);transform:rotate(-10deg)}
+.persona{min-height:250px}.avatar{font-size:2.5rem}.meta{font:700 .75rem "Courier New",monospace;text-transform:uppercase}
+.mini-list{margin:10px 0 0;padding-left:18px}.mini-list li{margin:5px 0}
+.sticker{display:inline-block;background:var(--blue);padding:4px 7px;font:700 .72rem "Courier New",monospace;transform:rotate(-1deg)}
+.btns{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
+.btn{border:2px solid var(--ink);background:var(--ink);color:var(--paper);padding:11px 15px;min-height:44px;font:900 .85rem "Courier New",monospace;text-transform:uppercase;cursor:pointer;box-shadow:3px 3px 0 var(--red)}
+.btn.alt{background:var(--paper);color:var(--ink);box-shadow:3px 3px 0 var(--blue)}
+.btn:hover,.btn:focus-visible{transform:translate(-1px,-1px);outline:3px solid var(--yellow);outline-offset:2px}
+.feedback{display:none;margin-top:20px;padding:14px 16px;border-left:7px solid var(--red);background:#f3dfd9;font-weight:700}
+.feedback.good{display:block;border-color:#557d4e;background:#e1ecd9}.feedback.bad{display:block}
+.story-form{margin:16px 0;padding:15px;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.story-form label{display:block;font:900 .75rem "Courier New",monospace;margin-bottom:5px;text-transform:uppercase}
+select,textarea,input{width:100%;border:0;border-bottom:2px solid var(--ink);background:rgba(255,255,255,.35);padding:10px 7px;font-size:1rem;border-radius:0}
+select:focus,textarea:focus,input:focus{outline:3px solid var(--blue);outline-offset:2px}
+.story-preview{background:var(--white);border:1px dashed var(--ink);padding:12px;margin-top:10px;font-style:italic}
+.big-quote{font:900 clamp(1.25rem,3vw,2rem) Arial,Helvetica,sans-serif;border-left:10px solid var(--yellow);padding-left:14px;margin:22px 0}
+.mark{background:linear-gradient(transparent 55%,rgba(242,223,102,.85) 55%)}
+.casefile{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start;border-top:2px solid var(--ink);padding-top:14px}
+.case-no{font:900 2.8rem "Courier New",monospace;color:var(--red)}
+.summary-card{border:2px solid var(--ink);background:var(--white);padding:14px;margin:10px 0;transform:rotate(-.2deg)}
+.rating{font:900 clamp(3rem,8vw,6rem) Arial;color:var(--red);line-height:.9}
+.small{font-size:.86rem;color:var(--muted)}
+.print-note{font:700 .72rem "Courier New",monospace}
+@media(max-width:820px){.workspace{grid-template-columns:1fr}.sidebar{grid-template-columns:1fr 1fr}.paper{min-height:auto}.paper:before{left:22px}}
+@media(max-width:520px){.shell{padding:10px}.masthead{grid-template-columns:1fr}.score-stamp{justify-self:start}.stage-strip{grid-template-columns:repeat(3,1fr)}.stage-dot{border-bottom:1px solid var(--ink)}.sidebar{grid-template-columns:1fr}.paper{padding:20px 18px}.paper:before{display:none}.btn{width:100%}}
+@media print{body{background:white}.sidebar,.masthead,.stage-strip,.btns{display:none}.workspace{display:block}.paper{box-shadow:none;border:0}}
 </style>
 </head>
 <body>
-<main>
-<header>
-<div class="brand">PERSONA<span>QUEST</span></div>
-<div class="progress"><div class="small" id="stepLabel">Stage 1 of 6</div><div class="bar"><div class="fill" id="progressFill"></div></div></div>
-<div><strong id="scoreTop">0 pts</strong></div>
-</header>
-
-<section class="panel" id="screen"></section>
-</main>
-
+<div class="shell">
+  <header class="masthead">
+    <div class="logo">Persona Lab<small>USER RESEARCH → USER STORIES → BETTER REQUIREMENTS</small></div>
+    <div class="score-stamp" id="scoreTop">SCORE 000</div>
+  </header>
+  <nav class="stage-strip" id="stageStrip" aria-label="Activity progress"></nav>
+  <div class="workspace">
+    <main class="paper" id="screen"></main>
+    <aside class="sidebar">
+      <section class="clipboard">
+        <h3>Working file</h3>
+        <div id="workingFile" class="small">No persona selected yet.</div>
+      </section>
+      <section class="note">
+        <h3>Rule #1</h3>
+        <div id="tip">You are not designing for yourself.</div>
+      </section>
+      <section class="note">
+        <h3>What links together?</h3>
+        <div><strong>Persona → need → user story → feature</strong></div>
+      </section>
+    </aside>
+  </div>
+</div>
 <script>
-const screen=document.getElementById('screen'), scoreTop=document.getElementById('scoreTop'), fill=document.getElementById('progressFill'), stepLabel=document.getElementById('stepLabel');
-let step=1,score=0,persona=null,selectedNeeds=[],builtStories=[],priorities={must:[],should:[],could:[]};
+const screen=document.getElementById('screen'), scoreTop=document.getElementById('scoreTop'), workingFile=document.getElementById('workingFile'), tip=document.getElementById('tip'), stageStrip=document.getElementById('stageStrip');
+let step=1,score=0,persona=null,selectedNeeds=[],builtStories=[],qualityAnswers=0,priority=null;
 
+const stages=['Brief','Persona','Evidence','Stories','Critique','Priority'];
 const personas=[
-{id:'maya',avatar:'🎧',name:'Maya',age:17,role:'Sixth-form student',bio:'Uses her phone for almost everything. She studies on the bus and between lessons, often with patchy signal.',goals:['Revise in short bursts','See progress quickly','Use the app comfortably on mobile'],frustrations:['Long pages of text','Losing progress','Sites that work badly on phones'],access:'Needs clear text, strong contrast and touch-friendly controls.'},
-{id:'dan',avatar:'🧑‍💼',name:'Dan',age:42,role:'Part-time mature learner',bio:'Works full-time and studies in the evening on a laptop. He is confident with basic websites but not complex software.',goals:['Find exactly what he needs','Continue from where he stopped','Understand unfamiliar terminology'],frustrations:['Hidden navigation','Jargon without explanation','Being forced through unnecessary steps'],access:'Benefits from simple navigation, plain language and obvious save/resume controls.'},
-{id:'leo',avatar:'🦾',name:'Leo',age:19,role:'College student',bio:'Uses keyboard navigation and assistive technology. He is technically confident and expects websites to follow accessibility standards.',goals:['Navigate without a mouse','Understand controls immediately','Complete the same tasks as everyone else'],frustrations:['Mouse-only interfaces','Poor focus indicators','Images or buttons without labels'],access:'Needs full keyboard access, visible focus and meaningful labels for controls.'}
+{id:'maya',avatar:'🎧',name:'Maya Patel',age:17,role:'Sixth-form student',device:'Mostly phone',context:'Revises on buses and in short gaps between lessons. Mobile signal is not always reliable.',goals:['Revise in short bursts','See progress quickly','Use the service comfortably on a phone'],frustrations:['Long walls of text','Losing progress','Desktop-first layouts'],access:'Clear text, strong contrast and large touch targets.'},
+{id:'dan',avatar:'☕',name:'Dan Reeves',age:42,role:'Part-time mature learner',device:'Laptop at home',context:'Works full-time and studies late in the evening. He has little patience for hunting through menus.',goals:['Find exactly what he needs','Resume previous work','Understand unfamiliar terminology'],frustrations:['Hidden navigation','Unexplained jargon','Unnecessary steps'],access:'Plain language, obvious navigation and reliable save/resume.'},
+{id:'leo',avatar:'⌨️',name:'Leo Brooks',age:19,role:'College student',device:'Laptop + keyboard',context:'Technically confident. Uses keyboard navigation and assistive technology rather than relying on a mouse.',goals:['Reach every control by keyboard','Know where focus is','Complete the same tasks as everyone else'],frustrations:['Mouse-only controls','Invisible focus states','Unlabelled icons'],access:'Keyboard access, visible focus and meaningful labels.'}
 ];
 
-const allNeeds=[
-{t:'Save progress automatically',for:['maya','dan'],why:'Both study in interrupted sessions and need to resume.'},
-{t:'Responsive mobile layout',for:['maya'],why:'Maya mainly uses her phone.'},
-{t:'Keyboard-accessible controls',for:['leo'],why:'Leo relies on keyboard navigation.'},
-{t:'Strong visible focus states',for:['leo'],why:'Leo needs to see where keyboard focus is.'},
-{t:'Clear plain-language explanations',for:['dan'],why:'Dan dislikes unexplained jargon.'},
-{t:'Fast topic search',for:['dan','maya'],why:'Both need to get to useful content quickly.'},
-{t:'Animated 3D homepage intro',for:[],why:'This is decoration, not a demonstrated user need.'},
-{t:'Autoplay background music',for:[],why:'This does not solve a persona need and may create accessibility issues.'}
+const needs=[
+{t:'Save progress automatically',for:['maya','dan'],why:'Interrupted study sessions make save/resume genuinely useful.'},
+{t:'Responsive mobile layout',for:['maya'],why:'Maya mainly uses a phone.'},
+{t:'Keyboard-accessible controls',for:['leo'],why:'Leo needs to operate the interface without a mouse.'},
+{t:'Strong visible focus states',for:['leo'],why:'Keyboard users need to see which control currently has focus.'},
+{t:'Plain-language explanations',for:['dan'],why:'Dan is frustrated by unexplained terminology.'},
+{t:'Fast topic search',for:['dan','maya'],why:'Both users need to reach useful content quickly.'},
+{t:'Animated 3D landing page',for:[],why:'No persona evidence supports this. It is a design preference.'},
+{t:'Autoplay background music',for:[],why:'It does not solve a user problem and may create a barrier.'}
 ];
 
-const goodStoryParts={
-maya:{want:['save my revision progress','complete short quizzes on my phone','download a topic for offline study'],benefit:['I can continue later','I can revise during short gaps','I can study when my signal is poor']},
-dan:{want:['search for a topic quickly','see explanations of technical terms','resume my last activity'],benefit:['I do not waste my limited study time','I can understand unfamiliar content','I can continue after work']},
-leo:{want:['use every feature with a keyboard','see a clear focus indicator','get meaningful labels for controls'],benefit:['I can navigate without a mouse','I always know where I am on the page','my assistive technology can identify each control']}
+const storyData={
+maya:[
+['save my revision progress','I can continue later'],
+['complete short quizzes comfortably on my phone','I can revise during short gaps'],
+['download a topic before travelling','I can study when my signal is poor']
+],
+dan:[
+['search directly for a topic','I do not waste my limited study time'],
+['see plain-English explanations of technical terms','I can understand unfamiliar content'],
+['resume my last activity','I can continue where I stopped after work']
+],
+leo:[
+['use every interactive control from the keyboard','I can navigate without a mouse'],
+['see a clear focus indicator','I always know where I am on the page'],
+['get meaningful text labels for controls','my assistive technology can identify them']
+]
 };
 
-function update(){scoreTop.textContent=score+' pts';fill.style.width=((step-1)/5*100)+'%';stepLabel.textContent='Stage '+step+' of 6'}
+const critique=[
+{story:'As a student, I want a dark blue navigation bar, so that the website looks modern.',good:false,why:'It jumps straight to a visual solution. It does not explain a genuine user need.'},
+{story:'As a student, I want my progress to be saved, so that I can continue revising later.',good:true,why:'It names a user, a goal and the value of achieving it.'},
+{story:'As a user, I want the database to use SQL, so that the backend is efficient.',good:false,why:'That is an implementation choice. A user would not normally care how the backend is built.'}
+];
+
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
+function update(){
+  scoreTop.textContent='SCORE '+String(score).padStart(3,'0');
+  stageStrip.innerHTML=stages.map((s,i)=>'<div class="stage-dot '+(i+1<step?'done':i+1===step?'current':'')+'">'+(i+1)+'. '+s+'</div>').join('');
+  if(persona){
+    workingFile.innerHTML='<strong>'+esc(persona.name)+'</strong><br>'+esc(persona.role)+'<br><span class="small">'+builtStories.length+' user '+(builtStories.length===1?'story':'stories')+' drafted</span>';
+  } else workingFile.textContent='No persona selected yet.';
+}
 function addScore(n){score+=n;update()}
-function btn(txt,fn,kind='primary'){const b=document.createElement('button');b.textContent=txt;b.className=kind;b.addEventListener('click',fn);return b}
-function render(html){screen.innerHTML=html;update()}
+function render(html){screen.innerHTML=html;update();window.scrollTo({top:0,behavior:'smooth'})}
+function button(text,fn,alt=false){const b=document.createElement('button');b.type='button';b.className='btn'+(alt?' alt':'');b.textContent=text;b.addEventListener('click',fn);return b}
+function actions(){const d=document.createElement('div');d.className='btns';return d}
+function next(text,fn){const a=actions();a.append(button(text,fn));screen.append(a)}
 
 function stage1(){
-render('<h2>1. Meet the client</h2><p>Your team is designing <strong>StudySprint</strong>, a revision web app for college students. Before building features, you need to understand who you are designing for.</p><div class="card"><h3>Your mission</h3><p>Choose one target user. Every later decision must be justified by that person’s actual needs.</p></div><div class="actions" id="a"></div>');
-document.getElementById('a').append(btn('Choose a persona →',()=>{step=2;stage2()}))
+  step=1;tip.textContent='You are not designing for yourself.';
+  render('<div class="kicker">Client brief / 01</div><h2>StudySprint needs a redesign.</h2><p class="lead">A college has asked your team to improve its revision web app. The old team kept adding features they personally liked. Students still hate using it.</p><hr class="rule"><div class="casefile"><div class="case-no">01</div><div><h3>Your job</h3><p>Work like a UX designer. Use evidence about a real type of user, turn that evidence into needs, then write user stories that could guide development.</p><div class="big-quote">Do not ask: <span class="mark">“What would look cool?”</span><br>Ask: “What does this user actually need?”</div></div></div>');
+  next('Open the user files →',()=>{step=2;stage2()})
 }
+
 function stage2(){
-render('<h2>2. Choose your persona</h2><p>A useful persona represents a believable user with goals, frustrations and context. Choose one.</p><div class="grid" id="pg"></div>');
-const pg=document.getElementById('pg');
-personas.forEach(p=>{const c=document.createElement('button');c.className='choice';c.innerHTML='<div class="avatar">'+p.avatar+'</div><h3>'+p.name+', '+p.age+'</h3><div class="tag">'+p.role+'</div><p>'+p.bio+'</p><p><strong>Accessibility / usability:</strong> '+p.access+'</p>';c.onclick=()=>{persona=p;addScore(10);step=3;stage3()};pg.append(c)})
+  tip.textContent='A persona is useful because it gives design decisions a specific human context.';
+  render('<div class="kicker">User files / 02</div><h2>Pick one person to design for.</h2><p class="lead">Read the context, not just the age or job title. Your later choices must be supported by what the persona actually tells you.</p><div class="grid" id="personaGrid"></div>');
+  const g=document.getElementById('personaGrid');
+  personas.forEach(p=>{
+    const b=document.createElement('button');b.type='button';b.className='choice persona';
+    b.innerHTML='<div class="avatar">'+p.avatar+'</div><div class="meta">'+esc(p.device)+'</div><h3>'+esc(p.name)+', '+p.age+'</h3><span class="sticker">'+esc(p.role)+'</span><p>'+esc(p.context)+'</p><p class="small"><strong>Accessibility / usability:</strong> '+esc(p.access)+'</p>';
+    b.addEventListener('click',()=>{persona=p;addScore(10);step=3;stage3()});g.append(b)
+  })
 }
+
 function stage3(){
-selectedNeeds=[];
-render('<h2>3. Persona detective</h2><p>You chose <strong>'+persona.name+'</strong>. Select the <strong>three requirements</strong> that are best supported by this persona.</p><div class="grid" id="ng"></div><div class="actions" id="a"></div><div id="fb" class="feedback"></div>');
-const relevant=allNeeds.filter(n=>n.for.includes(persona.id)).sort(()=>Math.random()-.5).slice(0,3); const distractors=allNeeds.filter(n=>!n.for.includes(persona.id)).sort(()=>Math.random()-.5).slice(0,3); const candidates=[...relevant,...distractors].sort(()=>Math.random()-.5);
-const ng=document.getElementById('ng');
-candidates.forEach(n=>{const b=document.createElement('button');b.className='choice';b.textContent=n.t;b.onclick=()=>{b.classList.toggle('selected');if(b.classList.contains('selected')) selectedNeeds.push(n); else selectedNeeds=selectedNeeds.filter(x=>x!==n)};ng.append(b)});
-document.getElementById('a').append(btn('Check my choices',()=>{
-const fb=document.getElementById('fb');if(selectedNeeds.length!==3){fb.className='feedback bad';fb.textContent='Choose exactly three requirements.';return}
-const correct=selectedNeeds.filter(n=>n.for.includes(persona.id)).length;addScore(correct*10);
-fb.className='feedback '+(correct>=2?'good':'bad');
-fb.innerHTML='<strong>'+correct+'/3 strongly justified.</strong><br>'+selectedNeeds.map(n=>'• '+n.t+': '+n.why).join('<br>');
-const next=btn('Build user stories →',()=>{step=4;stage4()});document.getElementById('a').append(next);
-}))
+  selectedNeeds=[];tip.textContent='A requirement is stronger when you can point to evidence that justifies it.';
+  render('<div class="kicker">Evidence board / 03</div><h2>Which requirements can you defend?</h2><p class="lead">Select exactly <strong>three</strong>. Some cards sound attractive but have no evidence behind them.</p><div class="summary-card"><strong>'+esc(persona.name)+'</strong><br><span class="small">'+esc(persona.context)+'</span></div><div class="grid" id="needsGrid"></div><div id="feedback" class="feedback" aria-live="polite"></div>');
+  const relevant=needs.filter(n=>n.for.includes(persona.id)).sort(()=>Math.random()-.5).slice(0,3);
+  const distractors=needs.filter(n=>!n.for.includes(persona.id)).sort(()=>Math.random()-.5).slice(0,3);
+  const cards=[...relevant,...distractors].sort(()=>Math.random()-.5);
+  const g=document.getElementById('needsGrid');
+  cards.forEach(n=>{
+    const b=document.createElement('button');b.type='button';b.className='choice';b.innerHTML='<strong>'+esc(n.t)+'</strong>';
+    b.addEventListener('click',()=>{b.classList.toggle('selected'); if(b.classList.contains('selected')) selectedNeeds.push(n); else selectedNeeds=selectedNeeds.filter(x=>x!==n)});
+    g.append(b)
+  });
+  const a=actions();a.append(button('Check the evidence',()=>{
+    const fb=document.getElementById('feedback');
+    if(selectedNeeds.length!==3){fb.className='feedback bad';fb.textContent='Red pen: choose exactly three cards before checking.';return}
+    const correct=selectedNeeds.filter(n=>n.for.includes(persona.id)).length;
+    addScore(correct*10);
+    fb.className='feedback '+(correct===3?'good':'bad');
+    fb.innerHTML='<strong>'+correct+'/3 supported by the persona.</strong><br><br>'+selectedNeeds.map(n=>'• <strong>'+esc(n.t)+'</strong> — '+esc(n.why)).join('<br>');
+    a.innerHTML='';a.append(button('Turn needs into stories →',()=>{step=4;stage4()}))
+  }));screen.append(a)
 }
+
 function stage4(){
-builtStories=[];
-const parts=goodStoryParts[persona.id];
-render('<h2>4. User Story Builder</h2><p>Build three stories using the standard structure:</p><div class="card"><strong>As a [user], I want [goal], so that [benefit].</strong></div><div id="stories"></div><div class="actions" id="a"></div><div id="fb" class="feedback"></div>');
-const wrap=document.getElementById('stories');
-for(let i=0;i<3;i++){
- const d=document.createElement('div');d.className='story card';
- d.innerHTML='<strong>Story '+(i+1)+'</strong><select data-w="'+i+'"><option value="">Choose what the user wants…</option>'+parts.want.map(x=>'<option>'+x+'</option>').join('')+'</select><select data-b="'+i+'"><option value="">Choose why it matters…</option>'+parts.benefit.map(x=>'<option>'+x+'</option>').join('')+'</select>';
- wrap.append(d)
+  builtStories=[];tip.textContent='The “so that” matters. It explains the value, not just the action.';
+  const rows=storyData[persona.id];
+  render('<div class="kicker">Story workshop / 04</div><h2>Write stories from the evidence.</h2><p class="lead">This time you are not simply clicking a ready-made sentence. Build each story by pairing a genuine goal with the reason it matters.</p><div class="big-quote">As a <span class="mark">[user]</span>, I want <span class="mark">[goal]</span>, so that <span class="mark">[benefit]</span>.</div><div id="storyForms"></div><div id="feedback" class="feedback" aria-live="polite"></div>');
+  const wrap=document.getElementById('storyForms');
+  for(let i=0;i<3;i++){
+    const d=document.createElement('div');d.className='story-form';
+    d.innerHTML='<label>Story '+(i+1)+' — what does '+esc(persona.name.split(' ')[0])+' want?</label><select data-w="'+i+'"><option value="">Choose a goal…</option>'+rows.map((r,j)=>'<option value="'+j+'">'+esc(r[0])+'</option>').join('')+'</select><label style="margin-top:12px">Why does it matter?</label><select data-b="'+i+'"><option value="">Choose a benefit…</option>'+rows.map((r,j)=>'<option value="'+j+'">'+esc(r[1])+'</option>').join('')+'</select><div class="story-preview" id="preview'+i+'">Your story will appear here.</div>';
+    wrap.append(d);
+    d.querySelectorAll('select').forEach(s=>s.addEventListener('change',()=>preview(i)))
+  }
+  function preview(i){
+    const wi=document.querySelector('[data-w="'+i+'"]').value, bi=document.querySelector('[data-b="'+i+'"]').value, p=document.getElementById('preview'+i);
+    if(wi===''||bi===''){p.textContent='Your story will appear here.';return}
+    p.textContent='As '+persona.role.toLowerCase()+', I want to '+rows[+wi][0]+', so that '+rows[+bi][1]+'.'
+  }
+  const a=actions();a.append(button('Review my stories',()=>{
+    builtStories=[];let complete=true,matched=0;
+    for(let i=0;i<3;i++){
+      const wi=document.querySelector('[data-w="'+i+'"]').value, bi=document.querySelector('[data-b="'+i+'"]').value;
+      if(wi===''||bi===''){complete=false;continue}
+      if(wi===bi)matched++;
+      builtStories.push('As a '+persona.role.toLowerCase()+', I want to '+rows[+wi][0]+', so that '+rows[+bi][1]+'.')
+    }
+    const fb=document.getElementById('feedback');
+    if(!complete){fb.className='feedback bad';fb.textContent='Red pen: complete all three stories first.';return}
+    addScore(matched*10);
+    fb.className='feedback '+(matched===3?'good':'bad');
+    fb.innerHTML='<strong>'+matched+'/3 goals paired with the strongest matching benefit.</strong><br>'+(matched===3?'Nice. The story explains both what the user wants and why.':'Some combinations are grammatically valid, but the strongest stories link the goal to the most relevant benefit.');
+    a.innerHTML='';a.append(button('Critique other stories →',()=>{step=5;stage5()}))
+  }));screen.append(a)
 }
-document.getElementById('a').append(btn('Check stories',()=>{
- let ok=0;builtStories=[];
- for(let i=0;i<3;i++){const w=document.querySelector('[data-w="'+i+'"]').value,b=document.querySelector('[data-b="'+i+'"]').value;if(w&&b){ok++;builtStories.push('As '+persona.name+', I want to '+w+', so that '+b+'.')}}
- const fb=document.getElementById('fb');if(ok<3){fb.className='feedback bad';fb.textContent='Complete all three stories first.';return}
- addScore(30);fb.className='feedback good';fb.innerHTML='<strong>Good structure.</strong> Your stories describe a user, a need and a reason — not just a feature.';
- document.getElementById('a').append(btn('Story quality challenge →',()=>{step=5;stage5()}))
-}))
-}
+
 function stage5(){
-const qs=[
-{q:'As a student, I want a dark blue navigation bar, so that the website looks modern.',good:false,why:'This describes a design solution, not a meaningful user need.'},
-{q:'As a student, I want to save my progress, so that I can continue revising later.',good:true,why:'It gives a user, a useful goal and a clear benefit.'},
-{q:'As a user, I want the database to use SQL, so that the backend is efficient.',good:false,why:'That is a technical implementation decision, not a user-centred need.'}
-];let qi=0;
-function ask(){
-const x=qs[qi];render('<h2>5. Good story or bad story?</h2><p>Judge each story. Think about whether it expresses a genuine user need.</p><div class="card"><h3>'+x.q+'</h3></div><div class="actions" id="a"></div><div id="fb" class="feedback"></div>');
-const answer=(v)=>{const fb=document.getElementById('fb'),hit=v===x.good;if(hit)addScore(10);fb.className='feedback '+(hit?'good':'bad');fb.innerHTML='<strong>'+(hit?'Correct.':'Not quite.')+'</strong> '+x.why;document.getElementById('a').innerHTML='';document.getElementById('a').append(btn(qi<qs.length-1?'Next story →':'Prioritise backlog →',()=>{qi++;if(qi<qs.length)ask();else{step=6;stage6()}}))}
-document.getElementById('a').append(btn('Good story',()=>answer(true)));document.getElementById('a').append(btn('Bad story',()=>answer(false),'secondary'))
-} ask()
+  tip.textContent='A user story is not a colour choice, a database choice or a vague wish.';
+  qualityAnswers=0;let qi=0;
+  function ask(){
+    const q=critique[qi];
+    render('<div class="kicker">Red-pen review / 05</div><h2>Would you accept this story?</h2><p class="lead">Pretend this has just been pinned to your team backlog.</p><div class="summary-card"><div class="meta">Story '+(qi+1)+' of '+critique.length+'</div><p style="font-size:1.2rem"><strong>'+esc(q.story)+'</strong></p></div><div id="feedback" class="feedback" aria-live="polite"></div>');
+    const a=actions();
+    function answer(v){
+      const hit=v===q.good;if(hit){addScore(10);qualityAnswers++}
+      const fb=document.getElementById('feedback');fb.className='feedback '+(hit?'good':'bad');
+      fb.innerHTML='<strong>'+(hit?'✓ Good call.':'✗ Reconsider it.')+'</strong> '+esc(q.why);
+      a.innerHTML='';a.append(button(qi<critique.length-1?'Next story →':'Open the backlog →',()=>{qi++;if(qi<critique.length)ask();else{step=6;stage6()}}))
+    }
+    a.append(button('Accept',()=>answer(true)));a.append(button('Reject',()=>answer(false),true));screen.append(a)
+  }
+  ask()
 }
+
 function stage6(){
-render('<h2>6. Prioritise the backlog</h2><p>For this prototype, decide which story should be built first. Choose the one that most directly addresses <strong>'+persona.name+'’s</strong> context.</p><div class="grid" id="sg"></div><div id="fb" class="feedback"></div>');
-const sg=document.getElementById('sg');builtStories.forEach((s,i)=>{const b=document.createElement('button');b.className='choice';b.innerHTML='<strong>Story '+(i+1)+'</strong><p>'+s+'</p>';b.onclick=()=>finish(i);sg.append(b)});
-function finish(i){addScore(20);const fb=document.getElementById('fb');fb.className='feedback good';fb.innerHTML='<strong>Priority chosen.</strong> The important part is that you can justify it using the persona, rather than choosing a feature because you personally like it.<div class="actions" id="done"></div>';document.getElementById('done').append(btn('See results →',results))}
+  tip.textContent='Prioritising means making a justified trade-off, not saying everything is important.';
+  priority=null;
+  render('<div class="kicker">Backlog / 06</div><h2>You only have time to build one first.</h2><p class="lead">Choose the story you would put at the top of the backlog, then justify your choice in one sentence.</p><div id="backlog"></div><div class="story-form"><label for="reason">Why should this come first?</label><textarea id="reason" rows="3" maxlength="240" placeholder="Because this persona…"></textarea></div><div id="feedback" class="feedback" aria-live="polite"></div>');
+  const b=document.getElementById('backlog');
+  builtStories.forEach((s,i)=>{
+    const c=document.createElement('button');c.type='button';c.className='choice';c.style.marginBottom='10px';c.innerHTML='<span class="meta">Backlog card '+(i+1)+'</span><p><strong>'+esc(s)+'</strong></p>';
+    c.addEventListener('click',()=>{[...b.children].forEach(x=>x.classList.remove('selected'));c.classList.add('selected');priority=i});b.append(c)
+  });
+  const a=actions();a.append(button('Finish the design file',()=>{
+    const reason=document.getElementById('reason').value.trim(),fb=document.getElementById('feedback');
+    if(priority===null){fb.className='feedback bad';fb.textContent='Choose one backlog card first.';return}
+    if(reason.length<25){fb.className='feedback bad';fb.textContent='Give a proper justification — at least one clear sentence.';return}
+    addScore(20);showResults(reason)
+  }));screen.append(a)
 }
-function results(){
-fill.style.width='100%';stepLabel.textContent='Complete';
-render('<div class="score">'+score+' points</div><h2>Mission complete</h2><p>You moved from a <strong>persona</strong> to <strong>needs</strong>, then to <strong>user stories</strong> and finally to <strong>priorities</strong>. That is the key design chain.</p><div class="card"><div class="avatar">'+persona.avatar+'</div><h3>'+persona.name+'</h3><p>'+persona.bio+'</p><p><strong>Goals:</strong> '+persona.goals.join(' • ')+'</p><p><strong>Frustrations:</strong> '+persona.frustrations.join(' • ')+'</p></div><h3 style="margin-top:24px">Your user stories</h3>'+builtStories.map(s=>'<div class="story-chip">'+s+'</div>').join('')+'<div class="actions" id="a"></div>');
-document.getElementById('a').append(btn('Play again',()=>{step=1;score=0;persona=null;stage1()},'secondary'))
+
+function showResults(reason){
+  stageStrip.innerHTML=stages.map((s,i)=>'<div class="stage-dot done">'+(i+1)+'. '+s+'</div>').join('');
+  tip.textContent='Good UX decisions can be traced back to evidence about a user.';
+  const max=120, pct=Math.round(score/max*100);
+  render('<div class="kicker">Completed UX file</div><div class="rating">'+pct+'%</div><h2>'+esc(persona.name)+' design case</h2><p class="lead">You traced a line from a person, to evidence, to needs, to stories, to a prioritised development decision.</p><hr class="rule"><div class="casefile"><div class="case-no">✓</div><div><h3>Persona</h3><p><strong>'+esc(persona.name)+'</strong> — '+esc(persona.role)+'</p><p>'+esc(persona.context)+'</p><p><strong>Key frustrations:</strong> '+persona.frustrations.map(esc).join(' · ')+'</p></div></div><h3 style="margin-top:28px">Your user stories</h3>'+builtStories.map((s,i)=>'<div class="summary-card"><span class="meta">Story '+(i+1)+(i===priority?' — PRIORITY':'')+'</span><p>'+esc(s)+'</p></div>').join('')+'<div class="summary-card" style="background:#f2df66"><span class="meta">Priority justification</span><p>'+esc(reason)+'</p></div><p class="print-note">Teacher evidence: this page can be printed or screenshotted.</p>');
+  const a=actions();a.append(button('Start again',()=>{step=1;score=0;persona=null;selectedNeeds=[];builtStories=[];priority=null;stage1()},true));a.append(button('Print / save evidence',()=>window.print()));screen.append(a);update()
 }
+
 stage1();
 </script>
 </body>

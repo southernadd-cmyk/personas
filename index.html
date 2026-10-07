@@ -3,80 +3,117 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Persona Lab — User Personas & Stories</title>
+<title>Persona Lab — User Personas & User Stories</title>
 <style>
 :root{
-  --paper:#f3efe3; --ink:#1e1d1a; --muted:#615f58; --rule:#b8b1a3;
-  --yellow:#f2df66; --blue:#8fc6cf; --pink:#e5a9a3; --green:#a9c79e;
-  --red:#b84638; --white:#fffdf7; --shadow:rgba(54,45,31,.16);
+  --paper:#f2eddf; --ink:#1e1c18; --muted:#68645c; --line:#b7ad9d;
+  --yellow:#f1dc63; --blue:#91c2c9; --pink:#dfa59d; --green:#abc69c;
+  --red:#b84a3d; --white:#fffdf7; --shadow:rgba(61,50,34,.16);
 }
 *{box-sizing:border-box}
-html{background:#c8c2b5}
-body{margin:0;color:var(--ink);font-family:Georgia,"Times New Roman",serif;background:
-  linear-gradient(rgba(255,255,255,.18),rgba(255,255,255,.18)),
-  repeating-linear-gradient(0deg,#d3cec2 0,#d3cec2 1px,#cbc5b9 1px,#cbc5b9 4px);
-min-height:100vh}
+html{background:#c9c2b5}
+body{
+  margin:0;color:var(--ink);
+  font-family:Georgia,"Times New Roman",serif;
+  background:
+    linear-gradient(rgba(255,255,255,.12),rgba(255,255,255,.12)),
+    repeating-linear-gradient(0deg,#d3cdc1 0,#d3cdc1 1px,#cbc5b9 1px,#cbc5b9 4px);
+  min-height:100vh
+}
 button,select,input,textarea{font:inherit}
 button{color:inherit}
-.shell{max-width:1180px;margin:0 auto;padding:18px}
+.shell{max-width:1200px;margin:0 auto;padding:18px}
 .masthead{display:grid;grid-template-columns:1fr auto;gap:18px;align-items:end;margin:6px 0 18px}
 .logo{font-family:Arial Black,Impact,sans-serif;font-size:clamp(2rem,6vw,4.7rem);line-height:.82;letter-spacing:-.055em;text-transform:uppercase}
-.logo small{display:block;font-family:"Courier New",monospace;font-size:.18em;letter-spacing:.2em;margin-top:11px}
+.logo small{display:block;font-family:"Courier New",monospace;font-size:.18em;letter-spacing:.19em;margin-top:11px}
 .score-stamp{font-family:"Courier New",monospace;border:3px solid var(--red);color:var(--red);padding:9px 12px;transform:rotate(2deg);font-weight:900;background:rgba(255,253,247,.6)}
 .stage-strip{display:grid;grid-template-columns:repeat(6,1fr);border:2px solid var(--ink);background:var(--white);margin-bottom:18px}
-.stage-dot{min-height:38px;display:flex;align-items:center;justify-content:center;padding:6px;border-right:1px solid var(--ink);font:700 .72rem "Courier New",monospace;text-align:center}
+.stage-dot{min-height:40px;display:flex;align-items:center;justify-content:center;padding:6px;border-right:1px solid var(--ink);font:700 .71rem "Courier New",monospace;text-align:center}
 .stage-dot:last-child{border-right:0}.stage-dot.done{background:var(--ink);color:var(--paper)}.stage-dot.current{background:var(--yellow)}
-.workspace{display:grid;grid-template-columns:minmax(0,2.1fr) minmax(230px,.75fr);gap:22px;align-items:start}
-.paper{position:relative;background:var(--paper);border:1px solid #aaa292;padding:clamp(20px,4vw,44px);box-shadow:7px 9px 0 var(--shadow);min-height:560px}
-.paper:before{content:"";position:absolute;left:34px;top:0;bottom:0;border-left:1px solid rgba(184,70,56,.22);pointer-events:none}
+.workspace{display:grid;grid-template-columns:minmax(0,2.1fr) minmax(245px,.76fr);gap:22px;align-items:start}
+.paper{position:relative;background:var(--paper);border:1px solid #aaa292;padding:clamp(20px,4vw,44px);box-shadow:7px 9px 0 var(--shadow);min-height:620px}
+.paper:before{content:"";position:absolute;left:34px;top:0;bottom:0;border-left:1px solid rgba(184,74,61,.22);pointer-events:none}
 .paper>*{position:relative}
 .sidebar{display:grid;gap:14px}
 .clipboard,.note{padding:16px;background:var(--white);border:1px solid #9e9789;box-shadow:4px 5px 0 var(--shadow)}
 .clipboard h3,.note h3{font:900 .78rem "Courier New",monospace;letter-spacing:.08em;text-transform:uppercase;margin:0 0 10px}
 .note{background:var(--yellow);transform:rotate(-1deg)}
-.note:nth-child(even){background:#d8e7d1;transform:rotate(1deg)}
+.note:nth-child(even){background:#d8e5d1;transform:rotate(1deg)}
 .kicker{font:900 .78rem "Courier New",monospace;text-transform:uppercase;letter-spacing:.12em;color:var(--red);margin-bottom:8px}
-h1,h2,h3{font-family:Arial,Helvetica,sans-serif;letter-spacing:-.03em}
-h1,h2{font-weight:900}h2{font-size:clamp(1.8rem,4vw,3rem);margin:0 0 8px}
-h3{margin-top:0}
-p{line-height:1.55;margin:8px 0 14px}.lead{font-size:1.1rem;max-width:720px}
-.rule{border:0;border-top:2px solid var(--ink);margin:24px 0}
+h1,h2,h3,h4{font-family:Arial,Helvetica,sans-serif;letter-spacing:-.025em}
+h2{font-size:clamp(1.8rem,4vw,3rem);margin:0 0 8px;font-weight:900}
+h3{margin:0 0 8px}h4{margin:0 0 5px}
+p{line-height:1.58;margin:8px 0 14px}
+.lead{font-size:1.1rem;max-width:760px}
+.small{font-size:.88rem;color:var(--muted)}
+.rule{border:0;border-top:2px solid var(--ink);margin:26px 0}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px}
 .choice{position:relative;width:100%;text-align:left;border:2px solid var(--ink);background:var(--white);padding:16px;min-height:116px;cursor:pointer;box-shadow:3px 4px 0 var(--ink);transition:transform .08s,box-shadow .08s}
 .choice:hover,.choice:focus-visible{transform:translate(-2px,-2px);box-shadow:5px 6px 0 var(--ink);outline:3px solid var(--blue);outline-offset:2px}
 .choice.selected{background:var(--yellow)}
 .choice.selected:after{content:"✓";position:absolute;right:10px;top:7px;font:900 1.5rem Arial;color:var(--red);transform:rotate(-10deg)}
-.persona{min-height:250px}.avatar{font-size:2.5rem}.meta{font:700 .75rem "Courier New",monospace;text-transform:uppercase}
-.mini-list{margin:10px 0 0;padding-left:18px}.mini-list li{margin:5px 0}
+.persona{min-height:280px}.avatar{font-size:2.5rem}.meta{font:700 .75rem "Courier New",monospace;text-transform:uppercase}
 .sticker{display:inline-block;background:var(--blue);padding:4px 7px;font:700 .72rem "Courier New",monospace;transform:rotate(-1deg)}
 .btns{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
 .btn{border:2px solid var(--ink);background:var(--ink);color:var(--paper);padding:11px 15px;min-height:44px;font:900 .85rem "Courier New",monospace;text-transform:uppercase;cursor:pointer;box-shadow:3px 3px 0 var(--red)}
 .btn.alt{background:var(--paper);color:var(--ink);box-shadow:3px 3px 0 var(--blue)}
 .btn:hover,.btn:focus-visible{transform:translate(-1px,-1px);outline:3px solid var(--yellow);outline-offset:2px}
-.feedback{display:none;margin-top:20px;padding:14px 16px;border-left:7px solid var(--red);background:#f3dfd9;font-weight:700}
+.feedback{display:none;margin-top:20px;padding:15px 17px;border-left:7px solid var(--red);background:#f3dfd9}
 .feedback.good{display:block;border-color:#557d4e;background:#e1ecd9}.feedback.bad{display:block}
-.story-form{margin:16px 0;padding:15px;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.feedback strong{font-family:Arial,Helvetica,sans-serif}
+.story-form{margin:16px 0;padding:15px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .story-form label{display:block;font:900 .75rem "Courier New",monospace;margin-bottom:5px;text-transform:uppercase}
-select,textarea,input{width:100%;border:0;border-bottom:2px solid var(--ink);background:rgba(255,255,255,.35);padding:10px 7px;font-size:1rem;border-radius:0}
+select,textarea,input{width:100%;border:0;border-bottom:2px solid var(--ink);background:rgba(255,255,255,.4);padding:10px 7px;font-size:1rem;border-radius:0}
 select:focus,textarea:focus,input:focus{outline:3px solid var(--blue);outline-offset:2px}
 .story-preview{background:var(--white);border:1px dashed var(--ink);padding:12px;margin-top:10px;font-style:italic}
 .big-quote{font:900 clamp(1.25rem,3vw,2rem) Arial,Helvetica,sans-serif;border-left:10px solid var(--yellow);padding-left:14px;margin:22px 0}
-.mark{background:linear-gradient(transparent 55%,rgba(242,223,102,.85) 55%)}
+.mark{background:linear-gradient(transparent 55%,rgba(241,220,99,.88) 55%)}
 .casefile{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start;border-top:2px solid var(--ink);padding-top:14px}
 .case-no{font:900 2.8rem "Courier New",monospace;color:var(--red)}
-.summary-card{border:2px solid var(--ink);background:var(--white);padding:14px;margin:10px 0;transform:rotate(-.2deg)}
+.summary-card{border:2px solid var(--ink);background:var(--white);padding:14px;margin:10px 0;transform:rotate(-.15deg)}
 .rating{font:900 clamp(3rem,8vw,6rem) Arial;color:var(--red);line-height:.9}
-.small{font-size:.86rem;color:var(--muted)}
 .print-note{font:700 .72rem "Courier New",monospace}
+
+.lesson{margin:22px 0 26px;border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);background:rgba(255,253,247,.55)}
+.lesson-head{display:flex;gap:12px;align-items:center;padding:13px 15px;border-bottom:1px solid var(--ink);background:var(--white)}
+.lesson-no{font:900 1.6rem "Courier New",monospace;color:var(--red)}
+.lesson-head strong{font:900 1rem Arial,Helvetica,sans-serif}
+.lesson-body{padding:16px}
+.explain-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.explain{border:1px solid var(--ink);padding:13px;background:var(--white);min-height:126px}
+.explain:nth-child(2){background:#eef3e9}.explain:nth-child(3){background:#f5e8e5}.explain:nth-child(4){background:#edf4f4}
+.explain h4{font-size:.93rem;text-transform:uppercase}
+.explain p{font-size:.92rem;margin-bottom:0}
+.example{margin-top:15px;border-left:8px solid var(--blue);background:var(--white);padding:14px}
+.example.bad{border-color:var(--red);background:#f5e6e2}
+.example .label{font:900 .72rem "Courier New",monospace;text-transform:uppercase;margin-bottom:6px}
+.anatomy{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:14px}
+.anatomy>div{padding:12px;border:1px solid var(--ink);background:var(--white)}
+.anatomy strong{display:block;font:900 .75rem "Courier New",monospace;text-transform:uppercase;margin-bottom:5px}
+.definition{font-size:1.06rem;border:2px solid var(--ink);padding:15px;background:var(--yellow);margin:16px 0;box-shadow:3px 3px 0 var(--ink)}
+.why-chain{display:grid;grid-template-columns:1fr auto 1fr auto 1fr auto 1fr;align-items:stretch;gap:7px;margin:20px 0}
+.chain-box{border:2px solid var(--ink);background:var(--white);padding:12px;text-align:center;font:900 .82rem Arial,Helvetica,sans-serif}
+.chain-arrow{display:flex;align-items:center;font:bold 1.3rem Arial}
+.glossary{display:grid;gap:8px}
+.glossary div{border-bottom:1px solid var(--line);padding-bottom:8px}
+.glossary strong{font-family:Arial,Helvetica,sans-serif}
+.checklist{margin:10px 0;padding-left:20px}.checklist li{margin:7px 0}
+.teacher-mark{display:inline-block;color:var(--red);font:900 .85rem "Courier New",monospace;transform:rotate(-1deg)}
+.callout{padding:13px 15px;margin:16px 0;background:#e7eee2;border-left:8px solid #66845c}
+.callout strong{font-family:Arial,Helvetica,sans-serif}
+details.help{margin:14px 0;border-top:1px dashed var(--ink);border-bottom:1px dashed var(--ink);padding:8px 0}
+details.help summary{cursor:pointer;font:900 .78rem "Courier New",monospace;text-transform:uppercase}
+details.help p{font-size:.92rem}
 @media(max-width:820px){.workspace{grid-template-columns:1fr}.sidebar{grid-template-columns:1fr 1fr}.paper{min-height:auto}.paper:before{left:22px}}
+@media(max-width:620px){.explain-grid,.anatomy{grid-template-columns:1fr}.why-chain{grid-template-columns:1fr}.chain-arrow{justify-content:center;transform:rotate(90deg)}}
 @media(max-width:520px){.shell{padding:10px}.masthead{grid-template-columns:1fr}.score-stamp{justify-self:start}.stage-strip{grid-template-columns:repeat(3,1fr)}.stage-dot{border-bottom:1px solid var(--ink)}.sidebar{grid-template-columns:1fr}.paper{padding:20px 18px}.paper:before{display:none}.btn{width:100%}}
-@media print{body{background:white}.sidebar,.masthead,.stage-strip,.btns{display:none}.workspace{display:block}.paper{box-shadow:none;border:0}}
+@media print{body{background:white}.sidebar,.masthead,.stage-strip,.btns{display:none}.workspace{display:block}.paper{box-shadow:none;border:0}.lesson{break-inside:avoid}}
 </style>
 </head>
 <body>
 <div class="shell">
   <header class="masthead">
-    <div class="logo">Persona Lab<small>USER RESEARCH → USER STORIES → BETTER REQUIREMENTS</small></div>
+    <div class="logo">Persona Lab<small>LEARN THE IDEA → APPLY IT → EXPLAIN YOUR DECISION</small></div>
     <div class="score-stamp" id="scoreTop">SCORE 000</div>
   </header>
   <nav class="stage-strip" id="stageStrip" aria-label="Activity progress"></nav>
@@ -88,12 +125,21 @@ select:focus,textarea:focus,input:focus{outline:3px solid var(--blue);outline-of
         <div id="workingFile" class="small">No persona selected yet.</div>
       </section>
       <section class="note">
-        <h3>Rule #1</h3>
-        <div id="tip">You are not designing for yourself.</div>
+        <h3>Remember</h3>
+        <div id="tip">Good design starts with evidence about users, not personal preference.</div>
+      </section>
+      <section class="clipboard">
+        <h3>Mini glossary</h3>
+        <div class="glossary small">
+          <div><strong>Persona</strong><br>A fictional but believable representative user.</div>
+          <div><strong>Need</strong><br>A problem or goal the user genuinely has.</div>
+          <div><strong>User story</strong><br>A short statement of what a user wants and why.</div>
+          <div><strong>Requirement</strong><br>Something the product needs to do or provide.</div>
+        </div>
       </section>
       <section class="note">
-        <h3>What links together?</h3>
-        <div><strong>Persona → need → user story → feature</strong></div>
+        <h3>The chain</h3>
+        <div><strong>Persona → evidence → need → story → feature</strong></div>
       </section>
     </aside>
   </div>
@@ -103,21 +149,36 @@ const screen=document.getElementById('screen'), scoreTop=document.getElementById
 let step=1,score=0,persona=null,selectedNeeds=[],builtStories=[],qualityAnswers=0,priority=null;
 
 const stages=['Brief','Persona','Evidence','Stories','Critique','Priority'];
+
 const personas=[
-{id:'maya',avatar:'🎧',name:'Maya Patel',age:17,role:'Sixth-form student',device:'Mostly phone',context:'Revises on buses and in short gaps between lessons. Mobile signal is not always reliable.',goals:['Revise in short bursts','See progress quickly','Use the service comfortably on a phone'],frustrations:['Long walls of text','Losing progress','Desktop-first layouts'],access:'Clear text, strong contrast and large touch targets.'},
-{id:'dan',avatar:'☕',name:'Dan Reeves',age:42,role:'Part-time mature learner',device:'Laptop at home',context:'Works full-time and studies late in the evening. He has little patience for hunting through menus.',goals:['Find exactly what he needs','Resume previous work','Understand unfamiliar terminology'],frustrations:['Hidden navigation','Unexplained jargon','Unnecessary steps'],access:'Plain language, obvious navigation and reliable save/resume.'},
-{id:'leo',avatar:'⌨️',name:'Leo Brooks',age:19,role:'College student',device:'Laptop + keyboard',context:'Technically confident. Uses keyboard navigation and assistive technology rather than relying on a mouse.',goals:['Reach every control by keyboard','Know where focus is','Complete the same tasks as everyone else'],frustrations:['Mouse-only controls','Invisible focus states','Unlabelled icons'],access:'Keyboard access, visible focus and meaningful labels.'}
+{id:'maya',avatar:'🎧',name:'Maya Patel',age:17,role:'Sixth-form student',device:'Mostly phone',
+context:'Revises on buses and in short gaps between lessons. Mobile signal is not always reliable.',
+goals:['Revise in short bursts','See progress quickly','Use the service comfortably on a phone'],
+frustrations:['Long walls of text','Losing progress','Desktop-first layouts'],
+access:'Clear text, strong contrast and large touch targets.'},
+
+{id:'dan',avatar:'☕',name:'Dan Reeves',age:42,role:'Part-time mature learner',device:'Laptop at home',
+context:'Works full-time and studies late in the evening. He has little patience for hunting through menus.',
+goals:['Find exactly what he needs','Resume previous work','Understand unfamiliar terminology'],
+frustrations:['Hidden navigation','Unexplained jargon','Unnecessary steps'],
+access:'Plain language, obvious navigation and reliable save/resume.'},
+
+{id:'leo',avatar:'⌨️',name:'Leo Brooks',age:19,role:'College student',device:'Laptop + keyboard',
+context:'Technically confident. Uses keyboard navigation and assistive technology rather than relying on a mouse.',
+goals:['Reach every control by keyboard','Know where focus is','Complete the same tasks as everyone else'],
+frustrations:['Mouse-only controls','Invisible focus states','Unlabelled icons'],
+access:'Keyboard access, visible focus and meaningful labels.'}
 ];
 
 const needs=[
-{t:'Save progress automatically',for:['maya','dan'],why:'Interrupted study sessions make save/resume genuinely useful.'},
-{t:'Responsive mobile layout',for:['maya'],why:'Maya mainly uses a phone.'},
-{t:'Keyboard-accessible controls',for:['leo'],why:'Leo needs to operate the interface without a mouse.'},
+{t:'Save progress automatically',for:['maya','dan'],why:'Interrupted study sessions mean these users may need to stop and continue later.'},
+{t:'Responsive mobile layout',for:['maya'],why:'The persona evidence says Maya mainly studies on her phone.'},
+{t:'Keyboard-accessible controls',for:['leo'],why:'Leo operates the interface using keyboard navigation.'},
 {t:'Strong visible focus states',for:['leo'],why:'Keyboard users need to see which control currently has focus.'},
-{t:'Plain-language explanations',for:['dan'],why:'Dan is frustrated by unexplained terminology.'},
-{t:'Fast topic search',for:['dan','maya'],why:'Both users need to reach useful content quickly.'},
-{t:'Animated 3D landing page',for:[],why:'No persona evidence supports this. It is a design preference.'},
-{t:'Autoplay background music',for:[],why:'It does not solve a user problem and may create a barrier.'}
+{t:'Plain-language explanations',for:['dan'],why:'Dan is frustrated by unexplained jargon and unfamiliar terminology.'},
+{t:'Fast topic search',for:['dan','maya'],why:'Both users need to get to useful content quickly during limited study time.'},
+{t:'Animated 3D landing page',for:[],why:'Nothing in the persona evidence says this solves a user problem.'},
+{t:'Autoplay background music',for:[],why:'This is not supported by a user need and could create an accessibility problem.'}
 ];
 
 const storyData={
@@ -139,9 +200,17 @@ leo:[
 };
 
 const critique=[
-{story:'As a student, I want a dark blue navigation bar, so that the website looks modern.',good:false,why:'It jumps straight to a visual solution. It does not explain a genuine user need.'},
-{story:'As a student, I want my progress to be saved, so that I can continue revising later.',good:true,why:'It names a user, a goal and the value of achieving it.'},
-{story:'As a user, I want the database to use SQL, so that the backend is efficient.',good:false,why:'That is an implementation choice. A user would not normally care how the backend is built.'}
+{story:'As a student, I want a dark blue navigation bar, so that the website looks modern.',good:false,
+why:'This is a design choice disguised as a user story. “Dark blue” tells the team how to style the interface, but it does not describe a user problem or goal.',
+fix:'A stronger version would describe the real need first, such as: “As a student, I want important navigation choices to be easy to identify, so that I can move around the site quickly.”'},
+
+{story:'As a student, I want my progress to be saved, so that I can continue revising later.',good:true,
+why:'This contains all three useful parts: a clear user, something they genuinely want to do, and a reason that explains the value.',
+fix:'The development team can now discuss different ways to satisfy that need — autosave, accounts, local saving, or another solution.'},
+
+{story:'As a user, I want the database to use SQL, so that the backend is efficient.',good:false,
+why:'SQL is a technical implementation decision. Most users neither know nor care which database technology is used.',
+fix:'A user-centred story would describe the experience the user needs, such as fast search results or reliable saving.'}
 ];
 
 function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
@@ -158,120 +227,401 @@ function button(text,fn,alt=false){const b=document.createElement('button');b.ty
 function actions(){const d=document.createElement('div');d.className='btns';return d}
 function next(text,fn){const a=actions();a.append(button(text,fn));screen.append(a)}
 
+function lesson(title,definition,why,lookFor,mistake,example,exampleBad=false){
+  return '<section class="lesson">'+
+    '<div class="lesson-head"><span class="lesson-no">?</span><strong>'+esc(title)+'</strong></div>'+
+    '<div class="lesson-body">'+
+      '<div class="definition">'+definition+'</div>'+
+      '<div class="explain-grid">'+
+        '<div class="explain"><h4>Why do we use it?</h4><p>'+why+'</p></div>'+
+        '<div class="explain"><h4>What should you look for?</h4><p>'+lookFor+'</p></div>'+
+        '<div class="explain"><h4>Common mistake</h4><p>'+mistake+'</p></div>'+
+        '<div class="explain"><h4>In simple terms</h4><p>Use evidence about a user to make a better design decision. Do not guess.</p></div>'+
+      '</div>'+
+      '<div class="example '+(exampleBad?'bad':'')+'"><div class="label">Worked example</div>'+example+'</div>'+
+    '</div>'+
+  '</section>'
+}
+
 function stage1(){
-  step=1;tip.textContent='You are not designing for yourself.';
-  render('<div class="kicker">Client brief / 01</div><h2>StudySprint needs a redesign.</h2><p class="lead">A college has asked your team to improve its revision web app. The old team kept adding features they personally liked. Students still hate using it.</p><hr class="rule"><div class="casefile"><div class="case-no">01</div><div><h3>Your job</h3><p>Work like a UX designer. Use evidence about a real type of user, turn that evidence into needs, then write user stories that could guide development.</p><div class="big-quote">Do not ask: <span class="mark">“What would look cool?”</span><br>Ask: “What does this user actually need?”</div></div></div>');
-  next('Open the user files →',()=>{step=2;stage2()})
+  step=1;tip.textContent='Good design starts with evidence about users, not personal preference.';
+  render(
+    '<div class="kicker">Client brief / 01</div>'+
+    '<h2>Why are we doing this?</h2>'+
+    '<p class="lead">When a team designs a website or app, the dangerous question is <strong>“What do I like?”</strong> The better question is <strong>“What does the user need?”</strong></p>'+
+    '<div class="why-chain">'+
+      '<div class="chain-box">PERSONA<br><span class="small">Who are we designing for?</span></div><div class="chain-arrow">→</div>'+
+      '<div class="chain-box">NEED<br><span class="small">What problem or goal do they have?</span></div><div class="chain-arrow">→</div>'+
+      '<div class="chain-box">USER STORY<br><span class="small">How do we describe that need?</span></div><div class="chain-arrow">→</div>'+
+      '<div class="chain-box">FEATURE<br><span class="small">What could we build to help?</span></div>'+
+    '</div>'+
+    '<section class="lesson">'+
+      '<div class="lesson-head"><span class="lesson-no">1</span><strong>The idea behind user-centred design</strong></div>'+
+      '<div class="lesson-body">'+
+        '<div class="explain-grid">'+
+          '<div class="explain"><h4>The problem</h4><p>Designers are not the same as every user. A feature that seems obvious to you might confuse or exclude someone else.</p></div>'+
+          '<div class="explain"><h4>The solution</h4><p>Collect information about users, describe their needs, then use that evidence when making decisions.</p></div>'+
+          '<div class="explain"><h4>What this activity teaches</h4><p>You will practise turning information about a person into justified product requirements.</p></div>'+
+          '<div class="explain"><h4>What counts as a good answer?</h4><p>You should be able to point backwards and say: “I chose this because the persona told me…”</p></div>'+
+        '</div>'+
+      '</div>'+
+    '</section>'+
+    '<hr class="rule">'+
+    '<div class="casefile"><div class="case-no">01</div><div>'+
+      '<h3>The client</h3>'+
+      '<p>A college has asked your team to redesign <strong>StudySprint</strong>, a revision web app. The previous team added features they personally liked. Students still found the product awkward to use.</p>'+
+      '<div class="big-quote">Your job is to replace <span class="mark">guesswork</span> with <span class="mark">evidence</span>.</div>'+
+    '</div></div>'
+  );
+  next('Start with the users →',()=>{step=2;stage2()})
 }
 
 function stage2(){
-  tip.textContent='A persona is useful because it gives design decisions a specific human context.';
-  render('<div class="kicker">User files / 02</div><h2>Pick one person to design for.</h2><p class="lead">Read the context, not just the age or job title. Your later choices must be supported by what the persona actually tells you.</p><div class="grid" id="personaGrid"></div>');
+  tip.textContent='A persona is not just “a teenager” or “an older person”. It needs goals, context, behaviour and frustrations.';
+  const expl=lesson(
+    'What is a user persona?',
+    '<strong>A user persona is a fictional but believable person used to represent a type of real user.</strong> It is built from information about how that user behaves, what they want to achieve, what gets in their way and the context in which they use a product.',
+    'A persona gives the design team a specific person to think about. Instead of saying “users might want this”, the team can ask whether a feature actually helps the persona.',
+    'Goals, frustrations, devices, environment, confidence, accessibility needs and the situations in which the product will be used.',
+    'Treating a persona as a stereotype. Age and job title alone are not enough. The useful part is the behaviour and context.',
+    '<p><strong>Weak persona:</strong> “Sam, 18, student.”</p><p><strong>Stronger persona:</strong> “Sam studies on a phone during a 25-minute bus journey and often loses signal. Sam wants short activities that can continue offline.”</p>'
+  );
+  render(
+    '<div class="kicker">User files / 02</div>'+
+    '<h2>First: understand the person.</h2>'+
+    '<p class="lead">Before deciding what the app needs, learn who you are designing for.</p>'+
+    expl+
+    '<h3>Choose one persona</h3>'+
+    '<p>Read the <strong>context</strong> carefully. Later, the game will ask you to prove that your decisions are supported by this information.</p>'+
+    '<div class="grid" id="personaGrid"></div>'
+  );
   const g=document.getElementById('personaGrid');
   personas.forEach(p=>{
     const b=document.createElement('button');b.type='button';b.className='choice persona';
-    b.innerHTML='<div class="avatar">'+p.avatar+'</div><div class="meta">'+esc(p.device)+'</div><h3>'+esc(p.name)+', '+p.age+'</h3><span class="sticker">'+esc(p.role)+'</span><p>'+esc(p.context)+'</p><p class="small"><strong>Accessibility / usability:</strong> '+esc(p.access)+'</p>';
+    b.innerHTML=
+      '<div class="avatar">'+p.avatar+'</div>'+
+      '<div class="meta">'+esc(p.device)+'</div>'+
+      '<h3>'+esc(p.name)+', '+p.age+'</h3>'+
+      '<span class="sticker">'+esc(p.role)+'</span>'+
+      '<p>'+esc(p.context)+'</p>'+
+      '<p class="small"><strong>Goals:</strong> '+p.goals.map(esc).join(' · ')+'</p>'+
+      '<p class="small"><strong>Frustrations:</strong> '+p.frustrations.map(esc).join(' · ')+'</p>'+
+      '<p class="small"><strong>Accessibility / usability:</strong> '+esc(p.access)+'</p>';
     b.addEventListener('click',()=>{persona=p;addScore(10);step=3;stage3()});g.append(b)
   })
 }
 
 function stage3(){
-  selectedNeeds=[];tip.textContent='A requirement is stronger when you can point to evidence that justifies it.';
-  render('<div class="kicker">Evidence board / 03</div><h2>Which requirements can you defend?</h2><p class="lead">Select exactly <strong>three</strong>. Some cards sound attractive but have no evidence behind them.</p><div class="summary-card"><strong>'+esc(persona.name)+'</strong><br><span class="small">'+esc(persona.context)+'</span></div><div class="grid" id="needsGrid"></div><div id="feedback" class="feedback" aria-live="polite"></div>');
+  selectedNeeds=[];tip.textContent='Evidence tells you why a requirement exists. “It would be cool” is not evidence.';
+  const expl=lesson(
+    'From persona to user need',
+    '<strong>A user need is a problem to solve, a goal to support or a barrier to remove.</strong> A requirement is something the product may need to provide because of that need.',
+    'Without this step, teams often jump straight from an idea to a feature. Linking requirements to evidence makes decisions easier to explain and defend.',
+    'Look for clues in the persona. If the persona uses a phone, mobile layout matters. If they use keyboard navigation, keyboard access matters.',
+    'Choosing features because they sound impressive. A requirement should solve a problem that you can identify in the persona evidence.',
+    '<p>Persona evidence: <strong>“Maya studies on a phone during bus journeys.”</strong></p><p>Need: <strong>Study comfortably on a small screen.</strong></p><p>Possible requirement: <strong>The interface must work well on mobile.</strong></p>'
+  );
+  render(
+    '<div class="kicker">Evidence board / 03</div>'+
+    '<h2>Turn information into justified needs.</h2>'+
+    expl+
+    '<div class="callout"><strong>Your chosen persona: '+esc(persona.name)+'</strong><br>'+esc(persona.context)+'</div>'+
+    '<h3>Task: choose exactly three supported requirements</h3>'+
+    '<p>Some choices below are useful. Others are just ideas with no evidence behind them.</p>'+
+    '<div class="grid" id="needsGrid"></div>'+
+    '<div id="feedback" class="feedback" aria-live="polite"></div>'
+  );
+
   const relevant=needs.filter(n=>n.for.includes(persona.id)).sort(()=>Math.random()-.5).slice(0,3);
   const distractors=needs.filter(n=>!n.for.includes(persona.id)).sort(()=>Math.random()-.5).slice(0,3);
   const cards=[...relevant,...distractors].sort(()=>Math.random()-.5);
   const g=document.getElementById('needsGrid');
   cards.forEach(n=>{
     const b=document.createElement('button');b.type='button';b.className='choice';b.innerHTML='<strong>'+esc(n.t)+'</strong>';
-    b.addEventListener('click',()=>{b.classList.toggle('selected'); if(b.classList.contains('selected')) selectedNeeds.push(n); else selectedNeeds=selectedNeeds.filter(x=>x!==n)});
+    b.addEventListener('click',()=>{
+      b.classList.toggle('selected');
+      if(b.classList.contains('selected')) selectedNeeds.push(n);
+      else selectedNeeds=selectedNeeds.filter(x=>x!==n)
+    });
     g.append(b)
   });
-  const a=actions();a.append(button('Check the evidence',()=>{
+
+  const a=actions();
+  a.append(button('Check the evidence',()=>{
     const fb=document.getElementById('feedback');
-    if(selectedNeeds.length!==3){fb.className='feedback bad';fb.textContent='Red pen: choose exactly three cards before checking.';return}
+    if(selectedNeeds.length!==3){
+      fb.className='feedback bad';
+      fb.innerHTML='<strong>Not ready yet.</strong> Choose exactly three cards. The challenge is deciding which three can be justified using the persona.';
+      return
+    }
     const correct=selectedNeeds.filter(n=>n.for.includes(persona.id)).length;
     addScore(correct*10);
     fb.className='feedback '+(correct===3?'good':'bad');
-    fb.innerHTML='<strong>'+correct+'/3 supported by the persona.</strong><br><br>'+selectedNeeds.map(n=>'• <strong>'+esc(n.t)+'</strong> — '+esc(n.why)).join('<br>');
-    a.innerHTML='';a.append(button('Turn needs into stories →',()=>{step=4;stage4()}))
-  }));screen.append(a)
+    fb.innerHTML=
+      '<strong>'+correct+'/3 choices are strongly supported.</strong><br><br>'+
+      selectedNeeds.map(n=>
+        '<strong>'+esc(n.t)+'</strong><br>'+
+        (n.for.includes(persona.id)
+          ? '✓ Evidence link: '+esc(n.why)
+          : '✗ Problem: '+esc(n.why)
+        )
+      ).join('<br><br>')+
+      '<br><br><span class="teacher-mark">KEY IDEA: evidence → need → requirement</span>';
+    a.innerHTML='';
+    a.append(button('Now write user stories →',()=>{step=4;stage4()}))
+  }));
+  screen.append(a)
 }
 
 function stage4(){
-  builtStories=[];tip.textContent='The “so that” matters. It explains the value, not just the action.';
+  builtStories=[];tip.textContent='“I want…” says what the user needs. “So that…” explains why that need has value.';
   const rows=storyData[persona.id];
-  render('<div class="kicker">Story workshop / 04</div><h2>Write stories from the evidence.</h2><p class="lead">This time you are not simply clicking a ready-made sentence. Build each story by pairing a genuine goal with the reason it matters.</p><div class="big-quote">As a <span class="mark">[user]</span>, I want <span class="mark">[goal]</span>, so that <span class="mark">[benefit]</span>.</div><div id="storyForms"></div><div id="feedback" class="feedback" aria-live="polite"></div>');
+  const expl=lesson(
+    'What is a user story?',
+    '<strong>A user story is a short, user-centred description of something a person needs to do and why it matters.</strong> A common structure is: “As a [user], I want [goal], so that [benefit].”',
+    'It keeps the team focused on the user rather than immediately locking into one technical solution. The story explains the outcome before deciding exactly how to build it.',
+    'Three parts: who the user is, what they want to achieve, and why that outcome matters.',
+    'Writing a feature specification instead of a user need. “I want a blue button” is usually weaker than “I want the main action to be easy to find.”',
+    '<div class="anatomy">'+
+      '<div><strong>As a…</strong>part-time student</div>'+
+      '<div><strong>I want…</strong>to save my progress</div>'+
+      '<div><strong>So that…</strong>I can continue after work</div>'+
+    '</div>'+
+    '<p style="margin-top:12px"><strong>Complete story:</strong> As a part-time student, I want to save my progress, so that I can continue after work.</p>'
+  );
+
+  render(
+    '<div class="kicker">Story workshop / 04</div>'+
+    '<h2>Describe the need without designing the solution.</h2>'+
+    expl+
+    '<div class="callout"><strong>Why “so that” matters:</strong> “I want to save my work” tells us what. “So that I can continue later” tells us why. The reason helps the team judge whether a proposed feature actually solves the problem.</div>'+
+    '<h3>Task: build three user stories</h3>'+
+    '<p>Pair each goal with the benefit that best explains why it matters to '+esc(persona.name)+'.</p>'+
+    '<div id="storyForms"></div>'+
+    '<div id="feedback" class="feedback" aria-live="polite"></div>'
+  );
+
   const wrap=document.getElementById('storyForms');
   for(let i=0;i<3;i++){
     const d=document.createElement('div');d.className='story-form';
-    d.innerHTML='<label>Story '+(i+1)+' — what does '+esc(persona.name.split(' ')[0])+' want?</label><select data-w="'+i+'"><option value="">Choose a goal…</option>'+rows.map((r,j)=>'<option value="'+j+'">'+esc(r[0])+'</option>').join('')+'</select><label style="margin-top:12px">Why does it matter?</label><select data-b="'+i+'"><option value="">Choose a benefit…</option>'+rows.map((r,j)=>'<option value="'+j+'">'+esc(r[1])+'</option>').join('')+'</select><div class="story-preview" id="preview'+i+'">Your story will appear here.</div>';
+    d.innerHTML=
+      '<label>Story '+(i+1)+' — I want…</label>'+
+      '<select data-w="'+i+'"><option value="">Choose a goal…</option>'+
+        rows.map((r,j)=>'<option value="'+j+'">'+esc(r[0])+'</option>').join('')+
+      '</select>'+
+      '<label style="margin-top:12px">So that…</label>'+
+      '<select data-b="'+i+'"><option value="">Choose the strongest reason…</option>'+
+        rows.map((r,j)=>'<option value="'+j+'">'+esc(r[1])+'</option>').join('')+
+      '</select>'+
+      '<div class="story-preview" id="preview'+i+'">Your completed story will appear here.</div>';
     wrap.append(d);
     d.querySelectorAll('select').forEach(s=>s.addEventListener('change',()=>preview(i)))
   }
+
   function preview(i){
-    const wi=document.querySelector('[data-w="'+i+'"]').value, bi=document.querySelector('[data-b="'+i+'"]').value, p=document.getElementById('preview'+i);
-    if(wi===''||bi===''){p.textContent='Your story will appear here.';return}
-    p.textContent='As '+persona.role.toLowerCase()+', I want to '+rows[+wi][0]+', so that '+rows[+bi][1]+'.'
+    const wi=document.querySelector('[data-w="'+i+'"]').value;
+    const bi=document.querySelector('[data-b="'+i+'"]').value;
+    const p=document.getElementById('preview'+i);
+    if(wi===''||bi===''){p.textContent='Your completed story will appear here.';return}
+    p.textContent='As a '+persona.role.toLowerCase()+', I want to '+rows[+wi][0]+', so that '+rows[+bi][1]+'.'
   }
-  const a=actions();a.append(button('Review my stories',()=>{
+
+  const a=actions();
+  a.append(button('Review my stories',()=>{
     builtStories=[];let complete=true,matched=0;
     for(let i=0;i<3;i++){
-      const wi=document.querySelector('[data-w="'+i+'"]').value, bi=document.querySelector('[data-b="'+i+'"]').value;
+      const wi=document.querySelector('[data-w="'+i+'"]').value;
+      const bi=document.querySelector('[data-b="'+i+'"]').value;
       if(wi===''||bi===''){complete=false;continue}
       if(wi===bi)matched++;
       builtStories.push('As a '+persona.role.toLowerCase()+', I want to '+rows[+wi][0]+', so that '+rows[+bi][1]+'.')
     }
     const fb=document.getElementById('feedback');
-    if(!complete){fb.className='feedback bad';fb.textContent='Red pen: complete all three stories first.';return}
+    if(!complete){
+      fb.className='feedback bad';
+      fb.innerHTML='<strong>Finish all three stories.</strong> Each one needs a goal and a reason.';
+      return
+    }
     addScore(matched*10);
     fb.className='feedback '+(matched===3?'good':'bad');
-    fb.innerHTML='<strong>'+matched+'/3 goals paired with the strongest matching benefit.</strong><br>'+(matched===3?'Nice. The story explains both what the user wants and why.':'Some combinations are grammatically valid, but the strongest stories link the goal to the most relevant benefit.');
-    a.innerHTML='';a.append(button('Critique other stories →',()=>{step=5;stage5()}))
-  }));screen.append(a)
+    fb.innerHTML=
+      '<strong>'+matched+'/3 goals are paired with the strongest reason.</strong><br><br>'+
+      (matched===3
+        ? 'Each story now has a clear line of logic: <strong>user → goal → value</strong>.'
+        : 'A sentence can be grammatically correct and still be a weak user story. The “so that” should explain the most relevant reason for that particular goal.'
+      )+
+      '<br><br><span class="teacher-mark">ASK YOURSELF: if the “so that” disappeared, would the team lose useful information?</span>';
+    a.innerHTML='';
+    a.append(button('Learn how to critique stories →',()=>{step=5;stage5()}))
+  }));
+  screen.append(a)
 }
 
 function stage5(){
-  tip.textContent='A user story is not a colour choice, a database choice or a vague wish.';
+  tip.textContent='A good user story describes an outcome. It should not unnecessarily prescribe colours, layouts or backend technology.';
   qualityAnswers=0;let qi=0;
+
   function ask(){
     const q=critique[qi];
-    render('<div class="kicker">Red-pen review / 05</div><h2>Would you accept this story?</h2><p class="lead">Pretend this has just been pinned to your team backlog.</p><div class="summary-card"><div class="meta">Story '+(qi+1)+' of '+critique.length+'</div><p style="font-size:1.2rem"><strong>'+esc(q.story)+'</strong></p></div><div id="feedback" class="feedback" aria-live="polite"></div>');
+    render(
+      '<div class="kicker">Red-pen review / 05</div>'+
+      '<h2>How do you tell a good story from a weak one?</h2>'+
+      '<section class="lesson">'+
+        '<div class="lesson-head"><span class="lesson-no">5</span><strong>Three quick tests</strong></div>'+
+        '<div class="lesson-body">'+
+          '<ol class="checklist">'+
+            '<li><strong>User test:</strong> Is it written from the point of view of a meaningful user?</li>'+
+            '<li><strong>Goal test:</strong> Does it describe something the user genuinely needs to achieve?</li>'+
+            '<li><strong>Value test:</strong> Does “so that…” explain why the goal matters?</li>'+
+          '</ol>'+
+          '<div class="example bad"><div class="label">Warning sign</div><p>If the story mainly talks about a colour, a specific piece of technology or an implementation detail, it may have jumped to the solution too early.</p></div>'+
+        '</div>'+
+      '</section>'+
+      '<h3>Story '+(qi+1)+' of '+critique.length+'</h3>'+
+      '<div class="summary-card"><p style="font-size:1.18rem"><strong>'+esc(q.story)+'</strong></p></div>'+
+      '<p><strong>Your decision:</strong> would you accept this as a useful user story?</p>'+
+      '<div id="feedback" class="feedback" aria-live="polite"></div>'
+    );
+
     const a=actions();
     function answer(v){
-      const hit=v===q.good;if(hit){addScore(10);qualityAnswers++}
-      const fb=document.getElementById('feedback');fb.className='feedback '+(hit?'good':'bad');
-      fb.innerHTML='<strong>'+(hit?'✓ Good call.':'✗ Reconsider it.')+'</strong> '+esc(q.why);
-      a.innerHTML='';a.append(button(qi<critique.length-1?'Next story →':'Open the backlog →',()=>{qi++;if(qi<critique.length)ask();else{step=6;stage6()}}))
+      const hit=v===q.good;
+      if(hit){addScore(10);qualityAnswers++}
+      const fb=document.getElementById('feedback');
+      fb.className='feedback '+(hit?'good':'bad');
+      fb.innerHTML=
+        '<strong>'+(hit?'✓ Correct judgement.':'✗ Not quite.')+'</strong><br><br>'+
+        esc(q.why)+
+        '<br><br><strong>How to improve / interpret it:</strong> '+esc(q.fix);
+      a.innerHTML='';
+      a.append(button(qi<critique.length-1?'Try the next story →':'Move to prioritisation →',()=>{
+        qi++;
+        if(qi<critique.length)ask();
+        else{step=6;stage6()}
+      }))
     }
-    a.append(button('Accept',()=>answer(true)));a.append(button('Reject',()=>answer(false),true));screen.append(a)
+    a.append(button('Accept this story',()=>answer(true)));
+    a.append(button('Reject this story',()=>answer(false),true));
+    screen.append(a)
   }
   ask()
 }
 
 function stage6(){
-  tip.textContent='Prioritising means making a justified trade-off, not saying everything is important.';
+  tip.textContent='Prioritising means choosing what matters most first and explaining the trade-off.';
   priority=null;
-  render('<div class="kicker">Backlog / 06</div><h2>You only have time to build one first.</h2><p class="lead">Choose the story you would put at the top of the backlog, then justify your choice in one sentence.</p><div id="backlog"></div><div class="story-form"><label for="reason">Why should this come first?</label><textarea id="reason" rows="3" maxlength="240" placeholder="Because this persona…"></textarea></div><div id="feedback" class="feedback" aria-live="polite"></div>');
+
+  const expl=lesson(
+    'What does prioritising mean?',
+    '<strong>Prioritising means deciding which requirement or user story should be worked on first.</strong> Development time is limited, so teams cannot treat every idea as equally urgent.',
+    'It forces the team to consider impact. A high-priority story should solve an important user problem, remove a serious barrier or support a core task.',
+    'Ask: How important is this to the persona? How often will it matter? What happens if it is missing?',
+    'Choosing your favourite feature rather than the most important need. Priorities should be justified using the persona.',
+    '<p>If a keyboard user cannot reach the “Submit” button, keyboard access is not a nice extra — it blocks the core task. That makes it a strong candidate for high priority.</p>'
+  );
+
+  render(
+    '<div class="kicker">Backlog / 06</div>'+
+    '<h2>Which need should the team tackle first?</h2>'+
+    expl+
+    '<h3>Your backlog</h3>'+
+    '<p>Choose one story to put at the top, then explain your reasoning. There may be more than one defensible answer — what matters is the quality of the justification.</p>'+
+    '<div id="backlog"></div>'+
+    '<div class="story-form">'+
+      '<label for="reason">Complete this explanation</label>'+
+      '<textarea id="reason" rows="4" maxlength="320" placeholder="I would prioritise this because the persona evidence shows that…"></textarea>'+
+      '<p class="small">Aim for one or two clear sentences. Refer to the persona, their context, goal, frustration or accessibility need.</p>'+
+    '</div>'+
+    '<div id="feedback" class="feedback" aria-live="polite"></div>'
+  );
+
   const b=document.getElementById('backlog');
   builtStories.forEach((s,i)=>{
-    const c=document.createElement('button');c.type='button';c.className='choice';c.style.marginBottom='10px';c.innerHTML='<span class="meta">Backlog card '+(i+1)+'</span><p><strong>'+esc(s)+'</strong></p>';
-    c.addEventListener('click',()=>{[...b.children].forEach(x=>x.classList.remove('selected'));c.classList.add('selected');priority=i});b.append(c)
+    const c=document.createElement('button');c.type='button';c.className='choice';c.style.marginBottom='10px';
+    c.innerHTML='<span class="meta">Backlog card '+(i+1)+'</span><p><strong>'+esc(s)+'</strong></p>';
+    c.addEventListener('click',()=>{
+      [...b.children].forEach(x=>x.classList.remove('selected'));
+      c.classList.add('selected');priority=i
+    });
+    b.append(c)
   });
-  const a=actions();a.append(button('Finish the design file',()=>{
-    const reason=document.getElementById('reason').value.trim(),fb=document.getElementById('feedback');
-    if(priority===null){fb.className='feedback bad';fb.textContent='Choose one backlog card first.';return}
-    if(reason.length<25){fb.className='feedback bad';fb.textContent='Give a proper justification — at least one clear sentence.';return}
+
+  const a=actions();
+  a.append(button('Complete the case file',()=>{
+    const reason=document.getElementById('reason').value.trim();
+    const fb=document.getElementById('feedback');
+    if(priority===null){
+      fb.className='feedback bad';
+      fb.innerHTML='<strong>Choose a priority first.</strong> You need to make the trade-off before you can justify it.';
+      return
+    }
+    if(reason.length<35){
+      fb.className='feedback bad';
+      fb.innerHTML='<strong>Your justification is too thin.</strong> Explain <em>why</em> this matters to the persona. Refer back to evidence.';
+      return
+    }
     addScore(20);showResults(reason)
-  }));screen.append(a)
+  }));
+  screen.append(a)
 }
 
 function showResults(reason){
   stageStrip.innerHTML=stages.map((s,i)=>'<div class="stage-dot done">'+(i+1)+'. '+s+'</div>').join('');
-  tip.textContent='Good UX decisions can be traced back to evidence about a user.';
-  const max=120, pct=Math.round(score/max*100);
-  render('<div class="kicker">Completed UX file</div><div class="rating">'+pct+'%</div><h2>'+esc(persona.name)+' design case</h2><p class="lead">You traced a line from a person, to evidence, to needs, to stories, to a prioritised development decision.</p><hr class="rule"><div class="casefile"><div class="case-no">✓</div><div><h3>Persona</h3><p><strong>'+esc(persona.name)+'</strong> — '+esc(persona.role)+'</p><p>'+esc(persona.context)+'</p><p><strong>Key frustrations:</strong> '+persona.frustrations.map(esc).join(' · ')+'</p></div></div><h3 style="margin-top:28px">Your user stories</h3>'+builtStories.map((s,i)=>'<div class="summary-card"><span class="meta">Story '+(i+1)+(i===priority?' — PRIORITY':'')+'</span><p>'+esc(s)+'</p></div>').join('')+'<div class="summary-card" style="background:#f2df66"><span class="meta">Priority justification</span><p>'+esc(reason)+'</p></div><p class="print-note">Teacher evidence: this page can be printed or screenshotted.</p>');
-  const a=actions();a.append(button('Start again',()=>{step=1;score=0;persona=null;selectedNeeds=[];builtStories=[];priority=null;stage1()},true));a.append(button('Print / save evidence',()=>window.print()));screen.append(a);update()
+  tip.textContent='The strongest design decisions can be traced backwards to evidence about the user.';
+  const max=120,pct=Math.round(score/max*100);
+
+  render(
+    '<div class="kicker">Completed UX file</div>'+
+    '<div class="rating">'+pct+'%</div>'+
+    '<h2>You can now trace a design decision back to a user.</h2>'+
+    '<p class="lead">That is the whole point of personas and user stories: they give the team a reason for building something beyond “we thought it would be good”.</p>'+
+    '<div class="why-chain">'+
+      '<div class="chain-box">PERSONA<br><span class="small">'+esc(persona.name)+'</span></div><div class="chain-arrow">→</div>'+
+      '<div class="chain-box">EVIDENCE<br><span class="small">context + goals + frustrations</span></div><div class="chain-arrow">→</div>'+
+      '<div class="chain-box">USER STORY<br><span class="small">goal + reason</span></div><div class="chain-arrow">→</div>'+
+      '<div class="chain-box">PRIORITY<br><span class="small">justified decision</span></div>'+
+    '</div>'+
+    '<hr class="rule">'+
+    '<div class="casefile"><div class="case-no">✓</div><div>'+
+      '<h3>Your persona</h3>'+
+      '<p><strong>'+esc(persona.name)+'</strong> — '+esc(persona.role)+'</p>'+
+      '<p>'+esc(persona.context)+'</p>'+
+      '<p><strong>Goals:</strong> '+persona.goals.map(esc).join(' · ')+'</p>'+
+      '<p><strong>Frustrations:</strong> '+persona.frustrations.map(esc).join(' · ')+'</p>'+
+    '</div></div>'+
+    '<h3 style="margin-top:28px">Your user stories</h3>'+
+    builtStories.map((s,i)=>
+      '<div class="summary-card">'+
+        '<span class="meta">Story '+(i+1)+(i===priority?' — PRIORITY':'')+'</span>'+
+        '<p>'+esc(s)+'</p>'+
+      '</div>'
+    ).join('')+
+    '<div class="summary-card" style="background:#f1dc63">'+
+      '<span class="meta">Your priority justification</span>'+
+      '<p>'+esc(reason)+'</p>'+
+    '</div>'+
+    '<section class="lesson">'+
+      '<div class="lesson-head"><span class="lesson-no">✓</span><strong>What you should now be able to explain</strong></div>'+
+      '<div class="lesson-body">'+
+        '<ul class="checklist">'+
+          '<li>What a user persona is and why designers use one.</li>'+
+          '<li>Why a persona needs behaviour, goals and frustrations — not just demographics.</li>'+
+          '<li>How evidence from a persona can lead to a requirement.</li>'+
+          '<li>The structure of a user story: <strong>As a… I want… so that…</strong></li>'+
+          '<li>The difference between a user need and a design or technical solution.</li>'+
+          '<li>How to justify which user story should be prioritised.</li>'+
+        '</ul>'+
+      '</div>'+
+    '</section>'+
+    '<p class="print-note">This completed page can be printed or screenshotted as evidence.</p>'
+  );
+
+  const a=actions();
+  a.append(button('Start again',()=>{
+    step=1;score=0;persona=null;selectedNeeds=[];builtStories=[];priority=null;stage1()
+  },true));
+  a.append(button('Print / save evidence',()=>window.print()));
+  screen.append(a);update()
 }
 
 stage1();
